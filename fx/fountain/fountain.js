@@ -12,6 +12,8 @@ class Fountain extends Phaser.Scene {
 
 	create() {
 	    this.particles = this.add.particles('fountain1');
+		var offset = this.h > 690 ? (this.h - 690) : 0
+
 	    for (var i=0;i<4;i++) {
 		    this.particles.createEmitter({
 		        frame: [ 'red', 'yellow', 'white', 'blue', 'green' ],
@@ -19,7 +21,7 @@ class Fountain extends Phaser.Scene {
 		        y: this.h - 5,
 		        lifespan: 2000,
 		        angle: { min: 260, max: 280 },
-		        speed: { min: 800, max: 1100 },
+		        speed: { min: 800 + (offset/2), max: 1100 + (offset/2)},
 		        scaleX: { start: 0.2, end: 0 },
 		        scaleY: { start: 0.45, end: 0 },
 		        gravityY: 800,
@@ -34,7 +36,8 @@ class Fountain extends Phaser.Scene {
 		        y: this.h - 5,
 		        lifespan: 2000,
 		        angle: { min: 250, max: 290 },
-		        speed: { min: 600, max: 1100 },
+		        speed: { min: 800 + (offset/2), max: 1100 + (offset/2)},
+//		        speed: { min: 600, max: 1100 },
 		        scaleX: { start: 0.2, end: 0 },
 		        scaleY: { start: 0.45, end: 0 },
 		        gravityY: 750,

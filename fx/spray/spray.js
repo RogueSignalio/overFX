@@ -13,6 +13,8 @@ class Spray extends Phaser.Scene {
 
 	create() {
 	    this.particles = this.add.particles('spray');
+		var offset = this.h > 690 ? (this.h - 690) : 0
+
 	    for (var i=0;i<12;i++) {
 	    	setTimeout(() => {
 			    this.particles.createEmitter({
@@ -20,7 +22,7 @@ class Spray extends Phaser.Scene {
 			        y: this.h - 5,
 			        lifespan: 2000,
 			        angle: { min: 200, max: 340 },
-			        speed: { min: 500, max: 600 },
+			        speed: { min: 500+ (offset/2), max: 600+ (offset/2) },
 			        scaleX: { start: 0.55, end: 0 },
 			        scaleY: { start: 0.55, end: 0 },
 	    	        rotate: { min: -720, max: 720 },
@@ -37,12 +39,14 @@ class Spray extends Phaser.Scene {
 			        y: this.h - 5,
 			        lifespan: 2000,
 			        angle: { min: 250, max: 290 },
-			        speed: { min: 900, max: 1200 },
+			        speed: { min: 900+ (offset/2), max: 1200+ (offset/2) },
 			        scaleX: { start: 0.15, end: 0 },
 			        scaleY: { start: 0.15, end: 0 },
 			        gravityY: 800,
 			        bounce: 1.6,
 			        bounds: { x: 0, y: 0, w: this.w, h: this.h },
+			        collideLeft: false,
+			        collideRight: false,
 			        // collideTop: true,
 			        // collideBottom: false,
 	//				alpha: 0.95,
@@ -57,7 +61,7 @@ class Spray extends Phaser.Scene {
 			        y: this.h - 5,
 			        lifespan: 2000,
 			        angle: { min: 210, max: 330 },
-			        speed: { min: 550, max: 700 },
+			        speed: { min: 550+ (offset/2), max: 700+ (offset/2) },
 			        scaleX: { start: 0.15, end: 0 },
 			        scaleY: { start: 0.15, end: 0 },
 			        gravityY: 900,
