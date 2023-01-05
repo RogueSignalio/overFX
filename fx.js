@@ -156,6 +156,12 @@ class Fx {
 	  }
 	}
 
+	fireworks_show() {
+	  for (var i=0;i<10;i++) {
+	  	setTimeout(() => { this.fireworks(getRndInteger(0,2)); },(i*1000) + (i*getRndInteger(250,1000)))	
+	  }
+  }
+
 	snow(cnt=1) {
 		var config = {}
 		this.run_fx('snow',config,() => {
