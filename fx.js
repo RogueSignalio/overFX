@@ -9,7 +9,7 @@ class Fx {
 			    type: Phaser.AUTO,
 	    	  width: window.innerWidth,
 			    height: window.innerHeight,
-					transparent: true, 
+					//transparent: true, 
 			    backgroundColor: 'rgba(0,0,0,0)',
     		}
     	}
