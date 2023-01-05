@@ -18,7 +18,6 @@ class Fireworks extends Phaser.Scene {
 	    this.firework = this.add.particles('sparks');
 	    this.bomb = this.add.particles('sparks');
 		var offset = this.h > 690 ? (this.h - 690) : 0
-		console.log(this.h - (offset + 5))
 	    var conf = {
 	        x: this.w/2,
 	        y: (this.h - 5) - offset,

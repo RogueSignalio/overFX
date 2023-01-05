@@ -3,9 +3,6 @@
 <style id="page_style">
   body{
     background: #000000;
-    background-size: cover;
-    background-image:  url('./Warframe0144.jpg');
-	  display: flex;
 	  position: relative;
 	  width: 100%;
 	  height: 100%;
@@ -23,8 +20,8 @@
 <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.51.0/dist/phaser.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
 <script src="./fx.js" crossorigin="anonymous"></script>
-<body style="background-image: url('./Warframe0412.jpg')">
-<div style="position:absolute;left: 0px;top:0px;opacity:0.5;">
+<body>
+<div style="position:absolute;left: 0px;top:0px;opacity:0.5;border-color:#FF0000;border-width: 4px;">
 	<button onClick="fxengine.sparks()">Sparks</button><br>
 	<button onClick="fxengine.fountain()">Fountain</button><br>
 	<button onClick="fxengine.confetti()">Confetti</button><br>	
@@ -40,8 +37,9 @@
 	<button onClick="fxengine.hell()">Mega-Hell</button><br>	
 	<button onClick="fxengine.fireworks_show()">July 4th</button><br>	
 </div>
-<div id="gameContainer" style="width:100%;">
+<div id="gameContainer" style="width:100%;position:absolute;left: 0px;top:0px;opacity:0.5;border-color:#FF0000;border-width: 4px;">
 </div>
 <script>
 var fxengine = new Fx();
+
 </script>

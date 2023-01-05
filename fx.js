@@ -9,13 +9,16 @@ class Fx {
 			    type: Phaser.AUTO,
 	    	  width: window.innerWidth,
 			    height: window.innerHeight,
-					//transparent: true, 
+					transparent: true, 
 			    backgroundColor: 'rgba(0,0,0,0)',
     		}
     	}
     	this.engine = new Phaser.Game(config);
     	this.loaded = {};
-        this.counter = 0;
+      this.counter = 0;
+			document.getElementsByTagName("BODY")[0].onresize = function() {
+				window.addEventListener("resize", window.location.reload(true));
+			};
     }
 
     run_fx(name,config,myf) {
@@ -30,9 +33,8 @@ class Fx {
 	        }
 	    }
 	    else {
-	      // console.log(`${name} already loaded.`)
-          myf();
-		}
+        myf();
+			}
 	    this.loaded[name] = true;
     }
 
@@ -145,13 +147,13 @@ class Fx {
 	}
 
 	hell() {
-	  for (var i=0;i<8;i++) {
+	  for (var i=0;i<6;i++) {
 	  	setTimeout(() => { this.heartsplode(1); },0 + (i*110))	
 	  }
-	  for (var i=0;i<5;i++) {
+	  for (var i=0;i<4;i++) {
 		setTimeout(() => { this.boom(2); },1500 + (50*i))
 	  }
-	  for (var i=0;i<12;i++) {
+	  for (var i=0;i<8;i++) {
 		setTimeout(() => { this.sparks(1); },1400 + (80*i))
 	  }
 	}

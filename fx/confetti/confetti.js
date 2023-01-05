@@ -15,13 +15,13 @@ class Confetti extends Phaser.Scene {
 
 	    var conf = {
 	        x: this.w/2 + getRndInteger(-this.w/10,this.w/10),
-	        y: this.h/2 + getRndInteger(-this.h/10,this.h/10),
+	        y: this.h/3 + getRndInteger(-this.h/8,this.h/8),
 	        speed: { min: 400, max: 800 },
 	        angle: { min: 220, max: 320 },
 	        scaleX: { min: 0.01, max: 0.2 },
 	        rotate: { min: -360, max: 360 },
 	        scaleY: { min: -1, max: 1 },
-	        lifespan: 2400,
+	        lifespan: 3000,
 	        gravityY: 900 ,
 			maxParticles: 24,
 			quantity: 3,
@@ -42,4 +42,3 @@ class Confetti extends Phaser.Scene {
 	}
 
 }
-console.log('WTF?')

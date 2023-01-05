@@ -48,7 +48,7 @@ class Spray extends Phaser.Scene {
 			        collideLeft: false,
 			        collideRight: false,
 			        // collideTop: true,
-			        // collideBottom: false,
+			        collideBottom: false,
 	//				alpha: 0.95,
 					blendMode: 'SCREEN',
 					maxParticles: 140,
