@@ -20,7 +20,7 @@ class Spray extends Phaser.Scene {
 			    this.particles.createEmitter({
 			        x: this.w/2,// - (i * 10),
 			        y: this.h - 5,
-			        lifespan: 2000,
+			        lifespan: 2000 + (offset*2),
 			        angle: { min: 200, max: 340 },
 			        speed: { min: 500+ (offset/2), max: 600+ (offset/2) },
 			        scaleX: { start: 0.55, end: 0 },
@@ -37,7 +37,7 @@ class Spray extends Phaser.Scene {
 			    this.particles.createEmitter({
 			        x: this.w/2,// - (i * 10),
 			        y: this.h - 5,
-			        lifespan: 2000,
+			        lifespan: 2000 + (offset*2),
 			        angle: { min: 250, max: 290 },
 			        speed: { min: 900+ (offset/2), max: 1200+ (offset/2) },
 			        scaleX: { start: 0.15, end: 0 },
@@ -59,7 +59,7 @@ class Spray extends Phaser.Scene {
 			    this.particles.createEmitter({
 			        x: this.w/2,// - (i * 10),
 			        y: this.h - 5,
-			        lifespan: 2000,
+			        lifespan: 2000 + (offset*2),
 			        angle: { min: 210, max: 330 },
 			        speed: { min: 550+ (offset/2), max: 700+ (offset/2) },
 			        scaleX: { start: 0.15, end: 0 },
@@ -78,7 +78,7 @@ class Spray extends Phaser.Scene {
 	    setTimeout(()=>{ 
 	    	console.log('Spray Cleanup...') 
 			this.particles.scene.scene.remove()
-	    },4500)
+	    },4500+ (offset*2))
 	}
 
 	update() {

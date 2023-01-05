@@ -7,7 +7,7 @@ class Fx {
     	if (config == null) {
     		config = {
 			    type: Phaser.AUTO,
-	    	    width: window.innerWidth,
+	    	  width: window.screen.availWidth, //innerWidth,
 			    height: window.innerHeight,
 				transparent: true, 
 			    backgroundColor: 'rgba(0,0,0,0)',

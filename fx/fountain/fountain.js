@@ -19,7 +19,7 @@ class Fountain extends Phaser.Scene {
 		        frame: [ 'red', 'yellow', 'white', 'blue', 'green' ],
 		        x: this.w/2,// - (i * 10),
 		        y: this.h - 5,
-		        lifespan: 2000,
+		        lifespan: 2000 + (offset*2),
 		        angle: { min: 260, max: 280 },
 		        speed: { min: 800 + (offset/2), max: 1100 + (offset/2)},
 		        scaleX: { start: 0.2, end: 0 },
@@ -34,7 +34,7 @@ class Fountain extends Phaser.Scene {
 		        frame: [ 'red', 'yellow','white', 'blue', 'green' ],
 		        x: this.w/2, // + (i * 15),
 		        y: this.h - 5,
-		        lifespan: 2000,
+		        lifespan: 2000 + (offset*2),
 		        angle: { min: 250, max: 290 },
 		        speed: { min: 800 + (offset/2), max: 1100 + (offset/2)},
 //		        speed: { min: 600, max: 1100 },
@@ -53,7 +53,7 @@ class Fountain extends Phaser.Scene {
 	    setTimeout(()=>{ 
 	    	console.log('Fountain Cleanup...') 
 			this.particles.scene.scene.remove()
-	    },4250)
+	    },4250 + (offset*2))
 	}
 
 	update() {
