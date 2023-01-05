@@ -17,10 +17,10 @@ class Fireworks extends Phaser.Scene {
 	create() {
 	    this.firework = this.add.particles('sparks');
 	    this.bomb = this.add.particles('sparks');
-
+		var offset = this.h > 1080 ? 1080 : 0
 	    var conf = {
 	        x: this.w/2,
-	        y: this.h - 5,
+	        y: (this.h - 5) - offset,
 	        lifespan: 1300,
 	        angle: { min: 260, max: 280 },
 	        speed: { min: 900, max: 1100 },
