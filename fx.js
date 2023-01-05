@@ -150,11 +150,11 @@ class Fx {
 	  for (var i=0;i<6;i++) {
 	  	setTimeout(() => { this.heartsplode(1); },0 + (i*110))	
 	  }
-	  for (var i=0;i<4;i++) {
-		setTimeout(() => { this.boom(2); },1500 + (50*i))
+	  for (var i=0;i<3;i++) {
+		setTimeout(() => { this.boom(2); },1700 + (50*i))
 	  }
-	  for (var i=0;i<8;i++) {
-		setTimeout(() => { this.sparks(1); },1400 + (80*i))
+	  for (var i=0;i<6;i++) {
+		setTimeout(() => { this.sparks(1); },1500 + (80*i))
 	  }
 	}
 
@@ -166,11 +166,11 @@ class Fx {
 
 	snow(cnt=1) {
 		var config = {}
-		this.run_fx('snow',config,() => {
-			console.log("Run Snow")
+		this.run_fx('chill',config,() => {
+			console.log("Run Chill")
 			for(var i=0;i< (cnt*2);i++) {
 				setTimeout(() => {
-				this.engine.scene.add(`Snow${this.counter}`, Snow, true, {} );
+				this.engine.scene.add(`Snow${this.counter}`, Chill, true, {} );
 				this.counter++;
 				},150*i)
 			}

@@ -28,16 +28,17 @@ class Fireworks extends Phaser.Scene {
 	        scaleY: 0.1,
 	        gravityY: 1000,
 			maxParticles: 1,
-			alpha: 0.75,
-			tint: 0x333333,
+			alpha: 0.85,
+			tint: 0x555555,
 			quantity: 1,
 //			frequency: 1600,
 			deathCallback: (t) => {
-				var r = getRndInteger(1,4)
+				var r = getRndInteger(1,5)
 				if ( r == 1) { this.pop1(t) }
 				if ( r == 2) { this.pop2(t) }
 				if ( r == 3) { this.pop3(t) }					
 				if ( r == 4) { this.pop4(t) }					
+				if ( r == 5) { this.pop5(t) }					
 			}
 	    }
 
@@ -54,7 +55,7 @@ class Fireworks extends Phaser.Scene {
 	    setTimeout(()=>{ 
 	    	console.log('Fireworks cleanup...') 
 			this.bomb.scene.scene.remove()
-	    },5500)
+	    },6500)
 	}
 
 	pop1(t) {
@@ -173,5 +174,39 @@ class Fireworks extends Phaser.Scene {
 			a.play();
 	}
 
+	pop5(t,recurse=true) {
+	    var colors = [
+			[ 0xFF9999, 0xFFBBBB, 0xFFDDDD ],
+			[ 0x99FF99, 0xBBFFBB, 0xDDFFDD ],
+			[ 0x9999FF, 0xBBBBFF, 0xDDDDFF ],
+			[ 0xFF99FF, 0xFFBBFF, 0xFFDDFF ],
+			[ 0xFFFF99, 0xFFFFBB, 0xFFFFDD ],
+	    ]
+		var confend = {
+	        x: t.x,
+	        y: t.y,
+	        lifespan: 1600,
+	        angle: { start: 0, end: 380, steps: 20 },
+			speed: { min: 100, max: 140},
+			gravityY: -50,
+	        gravityX: getRndInteger(-50,50),
+	        scale: { start: 0.2, end: 0 },
+	        maxParticles: 200,
+	        quantity: 10,
+	        tint: colors[getRndInteger(0,colors.length-1)],
+	        blendMode: 'SCREEN'
+	    }
+	    var p5 = this.firework.createEmitter(confend)
+		var a = this.sound.add('f2');
+		a.detune = getRndInteger(-1000,1000)
+		a.play();
+	    setTimeout(() => { p5.gravityY = 400 },800);
+	    if (recurse == true) { setTimeout(this.pop5.bind(this,{x: t.x, y: t.y},false),400); }
+	}
+
+	//     this.drifter = this.add.particles('sparks');
+
+	// update() {
+	//     particles.y = particles.y + 1;
+	// }
 }
-console.log('WTF?')
