@@ -4,7 +4,7 @@ class Chill extends Phaser.Scene {
     }
 
 	preload() {
-	    this.load.image('snow', './fx/chill/snowflake02.png');
+	    this.load.image('snow', './fx/chill/snowflake03.png');
 //		this.load.audio('wind', ['./fx/images/Pop-sound.mp3',]);
 	    this.w = window.innerWidth
 	    this.h = window.innerHeight
@@ -16,7 +16,7 @@ class Chill extends Phaser.Scene {
 		var highWind = {
 	        tween: this.tweens.addCounter({
 	            from:-3,
-	            to: 10,
+	            to: 7,
 	            duration: 6 * SECOND,
 	            loop: Phaser.FOREVER,
 	            ease: 'Sine.easeInOut'
@@ -53,8 +53,8 @@ class Chill extends Phaser.Scene {
 	        lifespan: 6000,
 	        speed: { min: 100, max: 150},
 	        rotate: {min: -360, max: 360},
-	        scaleX: { start: 0.05, end: 0.01 },
-	        scaleY: { start: 0.06, end: 0.01 },
+	        scaleX: { start: 0.25, end: 0.01 },
+	        scaleY: { start: 0.3, end: 0.01 },
 
 //	        scaleX: { min: 0.01, max: 0.02 },
 //	        scaleY: { min: 0.01, max: 0.02 },
@@ -67,7 +67,7 @@ class Chill extends Phaser.Scene {
 	        frequency: 1,
 //	        quantity: 10,
 //	        maxParticles: 1200,
-	        tint: [ 0xFFFFFF, 0xDDDDFF ]
+	        tint: [ 0xFFFFFF, 0xDDDDFF, 0xBBBBFF ]
 	    }
 
 		this.flake1.addGravityWell(highWind.processor);
