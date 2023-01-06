@@ -83,7 +83,7 @@ class Chill extends Phaser.Scene {
 			setTimeout( (t)=> { 
 		    	console.log('Chill cleanup...') 
 				t.flake1.scene.scene.remove(); 
-			},4000,this)
+			},6000,this)
 	    },6500)
 	}
 

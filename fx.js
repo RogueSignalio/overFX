@@ -16,9 +16,9 @@ class Fx {
     	this.engine = new Phaser.Game(config);
     	this.loaded = {};
       this.counter = 0;
-			document.getElementsByTagName("BODY")[0].onresize = function() {
-				window.addEventListener("resize", window.location.reload(true));
-			};
+			//document.getElementsByTagName("BODY")[0].onresize = function() {
+				//window.addEventListener("resize", window.location.reload(true));
+			//};
     }
 
     run_fx(name,config,myf) {
