@@ -1,0 +1,13 @@
+Audio for these effects come from the following sources:
+
+http://www.freesoundslibrary.com
+http://pixabay.com
+
+In some cases, the audio files have been modified and all renamed.
+
+The author(s) of overfx make no claim for the ownership of said files.
+
+Your inclusion of the open source overfx into your web page or application may be required to provide attribution to the above sights.  
+
+We are not lawyers and it is you job to determine your requirements.
+

@@ -1,17 +1,14 @@
-class Chill extends Phaser.Scene {
+class Chill extends OverFxScene { //FxScene {
     constructor (config={}) {
         super(config);
     }
 
 	preload() {
-	    this.load.image('snow', './fx/chill/snowflake03.png');
-//		this.load.audio('wind', ['./fx/images/Pop-sound.mp3',]);
-	    this.w = window.innerWidth
-	    this.h = window.innerHeight
+	    this.load.image('snow', 'assets/overfx/snowflake04.png');
+		this.load.audio('wind', ['assets/overfx/winter_wind.mp3',]);
 	}
 
 	create() {
-	    this.flake1 = this.add.particles('snow');
 		var SECOND = 1000;
 		var highWind = {
 	        tween: this.tweens.addCounter({
@@ -52,39 +49,25 @@ class Chill extends Phaser.Scene {
 	        y: { min: -50, max: -50 }, //this.h/2,
 	        lifespan: 6000,
 	        speed: { min: 100, max: 150},
-	        rotate: {min: -360, max: 360},
-	        scaleX: { start: 0.25, end: 0.01 },
-	        scaleY: { start: 0.3, end: 0.01 },
+	        rotate: {min: -480, max: 480},
+	        scaleX: { start: 0.15, end: 0.01 },
+	        scaleY: { start: 0.2, end: 0.01 },
 
-//	        scaleX: { min: 0.01, max: 0.02 },
-//	        scaleY: { min: 0.01, max: 0.02 },
-//	        scaleX: { min: 0.01, max: 0.2 },
-//	        scaleY: { min: -1, max: 1 },
-
-	        alpha: { start: 0.8, end: 0 },
+	        alpha: { start: 1, end: 0 },
 	        gravityY: 100,
 	        blendMode: 'SCREEN',
-	        frequency: 1,
+	        frequency: 2,
 //	        quantity: 10,
 //	        maxParticles: 1200,
 	        tint: [ 0xFFFFFF, 0xDDDDFF, 0xBBBBFF ]
 	    }
 
+		this.flake1 = this.add_emitter('snow',conf);
 		this.flake1.addGravityWell(highWind.processor);
 		this.flake1.addGravityWell(lowWind.processor);
-		this.emito = this.flake1.createEmitter(conf);
-		
-		// var a = this.sound.add('confetti');
-		// a.detune = getRndInteger(-300,300)
-		// a.play();
+		this.audio_play_detune('wind',-300,300)
 
-	    setTimeout(()=>{ 
-			this.emito.stop(); 
-			setTimeout( (t)=> { 
-		    	console.log('Chill cleanup...') 
-				t.flake1.scene.scene.remove(); 
-			},6000,this)
-	    },6500)
+	    setTimeout(()=>{ this.stop_emitters() },6500)
 	}
 
 }
