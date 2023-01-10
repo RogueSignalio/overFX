@@ -113,14 +113,15 @@ class OverFx {
 		}
 
 		hell() {
-		  for (var i=0;i<6;i++) {
+
+		  for (var i=0;i<4;i++) {
 		  	setTimeout(() => { this.heartsplode(1); },0 + (i*110))	
 		  }
-		  for (var i=0;i<3;i++) {
-			setTimeout(() => { this.boom(2); },1700 + (50*i))
+		  for (var i=0;i<5;i++) {
+				setTimeout(() => { this.sparks(1); },1800 + (80*i))
 		  }
-		  for (var i=0;i<6;i++) {
-			setTimeout(() => { this.sparks(1); },1500 + (80*i))
+		  for (var i=0;i<3;i++) {
+				setTimeout(() => { this.boom(1); },2100 + (50*i))
 		  }
 		}
 
