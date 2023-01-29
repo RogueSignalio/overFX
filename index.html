@@ -1,38 +1,15 @@
 <!DOCTYPE html>
 <head>
-<link rel="icon" href="icon-system.png">
-<style id="page_style">
-  body{
-  	min-height: 100%;  
-  	background: url("assets/background.jpg") no-repeat center bottom/cover;
-    background-size: cover;
-	  position: relative;
-	  width: 100%;
-	  height: 100%;
-	  margin: 0px;
-    color: #ABBD88;
-	  font-size: 24px;
-	  overflow-y: hidden;
-  }
-  button {
-  	background-color:  #000000;
-    color: #ABBD88;
-    border-radius: 5em;
-    border-color: #444444;
-		padding: 5px;
-	  font-size: 24px;
-	  touch-action: manipulation;
-  }
-</style>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="index.css" id="page_style">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
+<!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> -->
-
-<script src="./overfx.js" crossorigin="anonymous"></script>
+<script src="fx/over_fx.js" crossorigin="anonymous"></script>
 </head>
-<body >
-<div style="position:absolute;left:0px;top:0px;opacity:0.8;height:90%;border-style:solid;border-color:#FF0000;border-width:0px;overflow-y:auto;">
-Phaser-3.24.1<br>
-	<button onClick="toggle_bg()">Background</button><br>
+<body>
+<div id="controls" class="controls">
+	<button onClick="toggle_bg()" class="toggle">BG</button><button onClick="toggle_logo()" class="toggle">Logo</button><br>
 	<button onClick="ofx.sparks()">Sparks</button><br>
 	<button onClick="ofx.fountain()">Fountain</button><br>
 	<button onClick="ofx.confetti()">Confetti</button><br>	
@@ -44,25 +21,46 @@ Phaser-3.24.1<br>
 	<button onClick="ofx.heartsplode()">HeartSplode</button><br>	
 	<button onClick="ofx.sparks(14)">Mega-Sparks</button><br>
 	<button onClick="ofx.fountain(5)">Mega-Fountain</button><br>
-	<button onClick="ofx.confetti(4)">Mega-Confetti</button><br>	
+	<button onClick="ofx.confetti(10)">Mega-Confetti</button><br>	
 	<button onClick="ofx.mega()">Mega-Mega</button><br>	
 	<button onClick="ofx.hell()">Mega-Hell</button><br>	
 	<button onClick="ofx.fireworks_show()">July 4th</button><br>	
 </div>
-<div id="gameContainer" style="width:100%;position:absolute;left: 0px;top:0px;opacity:0.5;border-color:#FF0000;border-width: 4px;">
+<div id="logo" class="logo">
+  <p class="rsyellow">OverFX v1 by</p>
+  <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;">
+  <p>Click Me!</p>
+  <ul id="details" class="details">
+    <li> OverFX prevents click thru during effect (ie., OVER)
+    <li> Uses FX plugin architecture.  10 built-in FX.
+    <li> Makes available full power of PhaserJS scenes.
+    <li> Simple to use in any Javascript or Web page
+    <li> Easy to modify or build new particle FX plugins
+    <li> See <a href="README.md" target="_BLANK_" id="readme">README</a> for more.
+    <li> Uses Phaser-3.24.  Particle rotation issue on 3.5+
+  <ul>
 </div>
+
 <script>
-var ofx = new OverFx
-var bg = true
-
-function toggle_bg() {
-	if (bg == true) {
-		document.getElementsByTagName("BODY")[0].style.background = "#000000";
-		bg = false
-	} else {
-		document.getElementsByTagName("BODY")[0].style.background = "url('assets/background.jpg') no-repeat center bottom/cover"
-		bg = true
-	}
-}
-
+  var bg_vis = true
+  var logo_vis = true
+  var ofx;
+  window.onload = function() {
+    console.log('Loaded!');
+    ofx = new OverFx({}) // debug:true
+  
+    logo = document.getElementById('logo');
+    logo.addEventListener("click", function(event) { this.blur(); ofx.fx_repeat('roguesignal',3); event.stopPropagation();}, false);
+    document.getElementById('readme').addEventListener("click", function(event) { event.stopPropagation(); }, false);
+  };
+  
+  function toggle_bg() {
+    if (bg_vis == true) { document.body.style.backgroundImage = 'none'; bg_vis = false; }
+    else { document.body.style.backgroundImage = "url('assets/roguesignal_bg.png')"; bg_vis = true; }
+  }
+  function toggle_logo() {
+    document.getElementById('logo').style.visibility = logo_vis ? "hidden" : "visible"
+    logo_vis = logo_vis ? false : true
+  }
 </script>
+</body>
