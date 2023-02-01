@@ -48,7 +48,6 @@
     margin-right:10px;
     margin-left:0px;
     cursor: pointer;
-
   }
   button:hover {
     box-shadow: 5px 5px 5px 0px var(--myorange);;
