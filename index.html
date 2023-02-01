@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 <link rel="icon" href="assets/favicon.png">
-<link rel="stylesheet" href="index.css" id="page_style">
+<link rel="stylesheet" href="over_fx.css" id="page_style">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
 <!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> -->
@@ -9,7 +9,10 @@
 </head>
 <body>
 <div id="controls" class="controls">
-	<button onClick="toggle_bg()" class="toggle">BG</button><button onClick="toggle_logo()" class="toggle">Logo</button><br>
+	<button onClick="toggle_bg()" class="toggle">BG</button>
+  <button onClick="toggle_logo()" class="toggle">Logo</button>
+  <button onClick="ofx.stop()" class="toggle" style="color:red;">🛑</button>
+<br>
 	<button onClick="ofx.sparks()">Sparks</button><br>
 	<button onClick="ofx.fountain()">Fountain</button><br>
 	<button onClick="ofx.confetti()">Confetti</button><br>	
@@ -27,8 +30,8 @@
 	<button onClick="ofx.fireworks_show()">July 4th</button><br>	
 </div>
 <div id="logo" class="logo">
-  <p class="rsyellow">OverFX v1 by</p>
-  <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;">
+  <p class="rsyellow">OverCSS v1 by</p>
+  <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;"/>
   <p>Click Me!</p>
   <ul id="details" class="details">
     <li> OverFX prevents click thru during effect (ie., OVER)
