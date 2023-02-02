@@ -23,15 +23,29 @@
     justify-content: center;
     align-items: center;
   }
-  .controls {
+  .control_icon {
+    right:20px;
+    top: 0px;
     position:absolute;
-    left:0px;top:0px;
+    text-align: center;
+    z-index:10001;
+
+  }
+  #controls {
+    visibility: hidden;
+  }
+
+  .controls {
+    display:unset;
+    position:absolute;
+    right:0px;top:0px;
     opacity:0.8;
-    height:90%;
-    min-width:200px;
+    max-height:500px;
+    width:155px;
     border-style:solid;
-    border-color:var(--myorange);
-    border-width:0px;
+    border-color:var(--mydarkblue);
+    border-width:0px 0px 0px 0px;
+    background-color: var(--mydarkblue);
     overflow-y:auto;
     z-index:10001;
   }
@@ -40,17 +54,42 @@
     color: var(--myyellow);
     border-radius: 10px;
     border-color: var(--myorange);
-		padding: 4px;
+		padding: 3px;
 	  font-size: 22px;
-    min-width: 150px;
+    min-width: 125px;
 	  touch-action: manipulation;
     margin:5px;
-    margin-right:10px;
+    margin-right:0px;
     margin-left:0px;
     cursor: pointer;
+    vertical-align:middle;
   }
   button:hover {
-    box-shadow: 5px 5px 5px 0px var(--myorange);;
+    box-shadow: 5px 5px 5px 0px var(--myorange);
+  }
+
+  input[type=checkbox]:focus {
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  input[type=checkbox] {
+    background-color: #222222;
+    border-radius: 2px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    position: relative;
+    top: 5px;
+    color: #000000;
+    pointer-events: none;
+  }
+
+  input[type=checkbox]:checked {
+    background-color: var(--myorange);
+    background: var(--myorange) url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
   }
   .toggle {
     min-width: 10px;
@@ -75,13 +114,26 @@
     user-select: none;
     border-color: var(--mydarkblue);
     cursor: pointer;
+    transition: box-shadow 0.4s;
+    -moz-transition: box-shadow 0.4s; /* Firefox 4 */
+    -webkit-transition: box-shadow 0.4s; /* Safari and Chrome */
+    -o-transition: box-shadow 0.4s; /* Opera */
   }
   .logo:hover {
     box-shadow: 0px 0px 10px 10px var(--mydarkblue);
+    transition: box-shadow 1s;
+    -moz-transition: box-shadow 1s; /* Firefox 4 */
+    -webkit-transition: box-shadow 1s; /* Safari and Chrome */
+    -o-transition: box-shadow 1s; /* Opera */
   }
-  .logo:active,focus {
+  .logo:active, focus {
     border-color: var(--myblue);
     box-shadow: 0px 0px 10px 20px var(--myblue);
+    background-color:var(--mydarkblue);
+    transition: box-shadow 1s;
+    -moz-transition: box-shadow 1s; /* Firefox 4 */
+    -webkit-transition: box-shadow 1s; /* Safari and Chrome */
+    -o-transition: box-shadow 1s; /* Opera */
   }
   .details {
     background-color:var(--mydarkblue);
@@ -103,7 +155,7 @@
   }
   /* Works on Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 12px;
+    width: 20px;
   }  
   *::-webkit-scrollbar-track {
     background: var(--sbback);

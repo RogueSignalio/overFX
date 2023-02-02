@@ -38,8 +38,6 @@ class OverFx {
 // TODO: Add ability to put OverFX into a container.
 // Will need to get container and dimensions of container
     constructor (config={},ph_config={}) {
-  		var ph_master_config = {
-  		}
     	this.engine = new Phaser.Game({
 		    type: Phaser.AUTO,
     	  width: window.innerWidth,
@@ -54,6 +52,7 @@ class OverFx {
       this.config = {
         debug: false,
         audio_on: true,
+        volume: 0.8,
         z_index: 10000,
         image_path: 'fx/assets/',
         audio_path: 'fx/assets/audio',
@@ -74,6 +73,23 @@ class OverFx {
 
     to_front(zindex=this.config.z_index) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.focus(); }
     to_back(zindex=(this.config.z_index*-1)) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.blur(); }
+    
+    audio_on() {
+      this.config.audio_on = true;
+      this.engine.sound.volume = this.config.volume
+    }
+
+    audio_off() {
+      this.config.audio_on = false;
+      this.engine.sound.volume = 0;
+//      this.engine.sound.stopAll()
+//      this.engine.sound.pause()
+    }
+
+    audio_toggle() {
+      if (this.config.audio_on == true) { this.audio_off(); }
+      else { this.audio_on(); }
+    }
 
     active_check() {
       if (this.engine.scene.scenes.length > 0) { this.to_front(); return true; }
@@ -131,7 +147,7 @@ class OverFx {
     }
 
     _stop_pass() {
-      ofx.engine.sound.stopAll()
+      this.engine.sound.stopAll()
       window.clearAllOverTimers()
       for (var scene of this.engine.scene.scenes) {        
         scene.kill_scene();

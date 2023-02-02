@@ -6,7 +6,7 @@ class OverFxScene extends Phaser.Scene {
       debug: false,
       image_path: 'fx/assets/',
       audio_path: 'fx/assets/audio/',
-      volume: 1,
+      volume: 0.8,
       ...config
     }
     this.emitters = [] // Store emiiters for later harvesting on particle death
@@ -32,7 +32,7 @@ class OverFxScene extends Phaser.Scene {
   // will prevent your audio from sounding repetitive.
   //
   audio_play_detune(audio,detune_min=0,detune_max=0,volume=null) {
-	  if (this.config.audio_on) {
+	  if (this.config.audio_on == true) {
       let a = this.sound.add(audio)
       a.detune = getRndInteger(detune_min,detune_max)
       a.volume = volume != null ? volume : this.config.volume
