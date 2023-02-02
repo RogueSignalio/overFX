@@ -74,6 +74,13 @@ class OverFx {
     to_front(zindex=this.config.z_index) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.focus(); }
     to_back(zindex=(this.config.z_index*-1)) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.blur(); }
     
+    volume(vol=null) {
+      if (vol >= 0) {
+        this.engine.sound.volume = this.config.volume = vol
+      }
+      return this.engine.sound.volume; 
+    }
+
     audio_on() {
       this.config.audio_on = true;
       this.engine.sound.volume = this.config.volume
@@ -132,7 +139,7 @@ class OverFx {
     }
 
     run_fx(name,config={},myf=function(){}) {
-    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this.run_scene(name); }) }
+    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this.run_scene(name); this.loaded[name] = true; }) }
       else { this.run_scene(name); }
     }
     
@@ -143,7 +150,7 @@ class OverFx {
 	    document.body.append(script);
 	    script.onload = onload;
       this.config.debug && console.log(`${name} loaded.`)
-      this.loaded[name] = true;
+      
     }
 
     _stop_pass() {
