@@ -76,7 +76,7 @@ const CannedFx = {
   canned_pixelstix2(cnt=1) {
     this.load_fx('ascension'); // Get it loaded to prevent delay
     setOverTimeout(() => {
-      this.run_fx('background',{ bgcolor: 0x000000, hold: 12000, fade: 1000})
+      this.run_fx('background',{ color: 0x000000, hold: 12000, fade: 1000})
       this.run_fx('ascension',{ color: 0x2200BB, bg_on: false })
       setOverTimeout(()=> { this.canned_sparks(5); },5000);
       setOverTimeout(()=> { this.canned_fountain(2); },6000);

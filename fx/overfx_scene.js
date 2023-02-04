@@ -11,7 +11,10 @@ class OverFxScene extends Phaser.Scene {
     }
     this.key = this.config.key
     this.engine = this.config.engine
-
+    //this.color = this.config.color ? this.config.color : 0xFFDD99;
+    //this.hold = this.config.hold ? this.config.hold : 10000;
+    //this.fade = this.config.fade ? this.config.fade : 600;
+    //this.bg_on = this.config.bg_on !== undefined ? this.config.bg_on : false;
     this.emitters = [] // Store emiiters for later harvesting on particle death
     // TODO Remove scene_ref...
     this.scene_ref = undefined
@@ -24,6 +27,7 @@ class OverFxScene extends Phaser.Scene {
     this.w = this.game.canvas.width; //window.innerWidth
     this.h = this.game.canvas.height; //window.innerHeight
     this.fx_preload()
+//    if (this.bg_on) this.engine.run_fx('background',{ bgcolor: 0x000000, hold: (this.hold + (this.fade * 5)), fade: this.fade/2})
   }
   fx_preload() { console.error('You must add a fx_preload() cuntion to your FX plugin.') }
 
