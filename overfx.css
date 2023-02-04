@@ -34,20 +34,25 @@
   #controls {
     visibility: hidden;
   }
+  a {
+    color: var(--myorange);
+  }
 
   .controls {
     display:unset;
     position:absolute;
-    right:0px;top:0px;
-    opacity:0.8;
+    right:0px;top:50px;
+    opacity:0.9;
     max-height:500px;
     width:155px;
     border-style:solid;
     border-color:var(--mydarkblue);
     border-width:0px 0px 0px 0px;
+    border-radius: 0px 0px 0px 10px;
     background-color: var(--mydarkblue);
     overflow-y:auto;
     z-index:10001;
+    padding-left: 10px;
   }
   button {
   	background-color: #000000;

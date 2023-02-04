@@ -9,8 +9,13 @@ class OverFxScene extends Phaser.Scene {
       volume: 0.8,
       ...config
     }
+    this.key = this.config.key
+    this.engine = this.config.engine
+
     this.emitters = [] // Store emiiters for later harvesting on particle death
+    // TODO Remove scene_ref...
     this.scene_ref = undefined
+
     this.enable_cleanup = true; // Sometimes we need to disable auto cleanup, but it needs to be run at some point. 
     this.active = true; // Setting active == false and enable_cleanup == true, will break down the scene.
   }
@@ -53,19 +58,19 @@ class OverFxScene extends Phaser.Scene {
 
   kill_scene() {
     this.config.debug && console.log(this.constructor.name + ' cleanup...') 
-    this.scene_ref.scene.scene.remove()     
+//    this.scene_ref.scene.scene.remove()
+    this.scene.remove()
   }
 
-  update() {
+  update(t,d) {
+    this.fx_update(t,d)
     if (this.enable_cleanup == false) { return; }
-    if (this.scene_ref == undefined) { return; }
-
+//    if (this.scene_ref == undefined) { return; }
     this.active = this.fx_check_alive()
-
+    
     if (!this.active) { this.kill_scene() }
-    else { this.fx_update() }
   }
-  fx_update() {  }
+  fx_update(t,d) {  }
 
   fx_check_alive() {
     var emit_alive = false

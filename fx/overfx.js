@@ -1,7 +1,7 @@
-/*
-===========================================================================
+/*===========================================================================
 Authors: BlackRogue01
 Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
+License: MIT
 ---------------------------------------------------------------------------
 A screen overlay particle FX system based on Phaser 3 particle engine and
 probably more in the future.  The purpose is to provide canned, full screen
@@ -10,33 +10,16 @@ FX to be run and hidden as needed, say as a game reward or something.
 FX are done with a plugin type system and could ultimately be any PhaserJS
 scene.
 
-See README.md
-===========================================================================
-*/
-window.activeOverTimers = [];
-
-window.setOverTimeout = function(func, delay) {
-    var timer = window.setTimeout(func, delay);
-    window.activeOverTimers.push(timer)
-    return timer;
-};
-
-window.clearOverTimeout = function(timerID) {
-    window.activeOverTimers = window.activeOverTimers.filter(a => a !== timeID)
-    window.clearTimeout(timerID);
-};
-
-window.clearAllOverTimers = function() {
-  var currentTimers = [...window.activeOverTimers]
-  window.activeOverTimers = []
-  for (let tID of currentTimers) {
-    window.clearTimeout(tID);
-  }
-}
-
+See README
+===========================================================================*/
+// TODO:
+// * Add ability to put OverFx into a container.
+//    -- Will need to get container and dimensions of container and use parent config option for phaser.
+// * Make timers instance encapsulated so .stop() only stops one OverFx instance scenes.
+// * Add asset loader to OverFxScene so as to guarantee unique names.
+// * Add some non-particle examples.
+//
 class OverFx {
-// TODO: Add ability to put OverFX into a container.
-// Will need to get container and dimensions of container
     constructor (config={},ph_config={}) {
     	this.engine = new Phaser.Game({
 		    type: Phaser.AUTO,
@@ -54,6 +37,7 @@ class OverFx {
         audio_on: true,
         volume: 0.8,
         z_index: 10000,
+        pre_canned: false,
         image_path: 'fx/assets/',
         audio_path: 'fx/assets/audio',
         ...config
@@ -62,42 +46,88 @@ class OverFx {
       this.engine.canvas.style.zIndex = this.config.z_index * -1
       this.counter = 0; // Used to generate unique scene IDs.  Will reset when scene count == 0
     	this.loaded = {}; // Store list of loaded JS scripts
+      this.load_fx('overfx_timer'); // Base FX setOverTimeouts
       this.load_fx('overfx_scene'); // Base FX scene
+      this.load_fx('canned_fx',() => { Object.assign(this,CannedFx); }); // Built-in "canned" FX
 
       // Resize is an issue ... this seems to be the most reliable path.
 			document.body.onresize = () => {
-				//console.log('resize')
 				this.engine.scale.resize(window.innerWidth, window.innerHeight);
 			};
     }
 
+    // Raise or lower to the z-index min or max layer
     to_front(zindex=this.config.z_index) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.focus(); }
     to_back(zindex=(this.config.z_index*-1)) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.blur(); }
     
+    // Set volume from 0 to 1
     volume(vol=null) {
-      if (vol >= 0) {
-        this.engine.sound.volume = this.config.volume = vol
-      }
+      if (vol && vol < 0) { vol = 0 }
+      else if (vol && vol > 1) { vol = 1 }
+
+      if (vol >= 0) { this.engine.sound.volume = this.config.volume = vol }
       return this.engine.sound.volume; 
     }
 
+    // Turns audio back on.
     audio_on() {
       this.config.audio_on = true;
       this.engine.sound.volume = this.config.volume
     }
 
+    // Turns audio off.
     audio_off() {
       this.config.audio_on = false;
       this.engine.sound.volume = 0;
-//      this.engine.sound.stopAll()
-//      this.engine.sound.pause()
     }
 
+    // Toggles the audio on / off from current state.
     audio_toggle() {
       if (this.config.audio_on == true) { this.audio_off(); }
       else { this.audio_on(); }
     }
 
+    // Run FX a number of X times with min and max delays in ms
+    // Deprecated, see run_fx_timed()
+		fx_repeat(name,cnt=1,delay_min=150,delay_max=150) {
+      console.info('Deprecated.  Use run_fx_repeat() instead.');
+			for(var i=0;i<cnt;i++) {
+				setOverTimeout(() => {
+					this.run_fx(name); 
+				},getRndInteger(delay_min,delay_max)*i)
+			}
+		}
+
+    run_fx_timed(name,cnt=1,config={},delay_min=150,delay_max=150) {
+			for(var i=0;i<cnt;i++) {
+				setOverTimeout(() => {
+          if (name.startsWith("canned_")) { this[name](cnt); }
+					else { this.run_fx(name,config); }
+				},getRndInteger(delay_min,delay_max)*i)
+			}      
+    }
+
+    // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
+    run_fx(name,config={}) {
+      if (name.startsWith("canned_")) { this[name](config); return; }
+    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); this.loaded[name] = true; }) }
+      else { this._run_scene(name,config); }
+    }
+
+    // Load anything in the FX subdir, typically an actual FX plugin.
+    // To load and immediately run, use run_fx() instead.
+    load_fx(name,onload=null) {
+      if (this.loaded[name]) return;
+			const script = document.createElement('script');
+	    script.id = `${name}.js`;
+	    script.src = `./fx/${name}.js`;
+	    document.body.append(script);
+      if (!onload) onload = ()=>{ this.loaded[name] = true; }
+	    script.onload = onload;
+      this.config.debug && console.log(`${name} loaded.`)
+    }
+
+    // Checks for active FX
     active_check() {
       if (this.engine.scene.scenes.length > 0) { this.to_front(); return true; }
       else {
@@ -106,26 +136,33 @@ class OverFx {
       }
     }
 
-    check_timer() {
-      setOverTimeout(() => {
-        let ret = this.active_check();
-        this.config.debug && console.log('Timer: '+ ret + ':' + this.engine.scene.scenes.length);
-        if (ret == true) this.check_timer()
-      },300);
+    // Stop all FX & audio
+    // A lil issue with timers firing etc do best to be safe
+    stop() {
+      this._stop_pass()
+      this._stop_pass()
+      this._stop_pass()
+      this.to_back()
+      this._stop_pass()
     }
 
-		fx_repeat(name,cnt=1,delay_min=150,delay_max=150) {
-			for(var i=0;i<cnt;i++) {
-				setOverTimeout(() => {
-					this.run_fx(name); 
-				},getRndInteger(delay_min,delay_max)*i)
-			}
+    // Kills the engine, scenes, and canvas.
+    // Useful if you want to clean it up.
+		kill() {
+			this.engine.destroy(true, false)
 		}
 
-    run_scene(name) {
+    add_canned(name,code) {
+      this['canned_'+name] = code;
+    }
+
+    // Runs a loaded FX scene.
+    _run_scene(name,config={}) {
       var config = {
         key: `${name}/${this.counter}`,
-        ...this.config
+        engine: this,
+        ...this.config,
+        ...config
       }
     	var cname = name[0].toUpperCase() + name.substr(1)
       this.config.debug && console.log("Run " + config.key, config)
@@ -133,24 +170,17 @@ class OverFx {
       this.engine.scene.add(config.key, fxscene, true, {} );
       if (this.counter == 0) {
         this.to_front()
-        this.check_timer()
+        this._check_timer()
       }
       this.counter++;
     }
 
-    run_fx(name,config={},myf=function(){}) {
-    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this.run_scene(name); this.loaded[name] = true; }) }
-      else { this.run_scene(name); }
-    }
-    
-    load_fx(name,onload=function(){}) {
-			const script = document.createElement('script');
-	    script.id = `${name}.js`;
-	    script.src = `./fx/${name}.js`;
-	    document.body.append(script);
-	    script.onload = onload;
-      this.config.debug && console.log(`${name} loaded.`)
-      
+    _check_timer() {
+      setOverTimeout(() => {
+        let ret = this.active_check();
+        this.config.debug && console.log('Timer: '+ ret + ':' + this.engine.scene.scenes.length);
+        if (ret == true) this._check_timer()
+      },300);
     }
 
     _stop_pass() {
@@ -161,89 +191,6 @@ class OverFx {
       }
       this.counter = 0
     }
-
-    stop() {
-      this._stop_pass()
-      this._stop_pass()
-      this._stop_pass()
-      this.to_back()
-      this._stop_pass()
-    }
-
-		kill() {
-			this.engine.destroy(true, false)
-		}
-
-		boom(cnt=1) {
-			this.fx_repeat('boom',cnt*4,100,200)
-		}
-
-		sparks(cnt=1) {
-			this.fx_repeat('sparks',cnt*2,50,100);
-		}
-
-		fountain(cnt=1) {
-			this.fx_repeat('fountain',cnt,150,250);
-		}
-
-		spray(cnt=1) {
-			this.fx_repeat('spray',cnt*1,100,150);
-		}
-
-		confetti(cnt=1) {
-			this.fx_repeat('confetti',cnt*2,25,50);
-		}
-
-		heart(cnt=1) {
-			this.fx_repeat('hearts',cnt*2,25,50);
-		}
-
-		heartsplode(cnt=1) {
-			this.fx_repeat('heartsplode',cnt*2,25,50);
-		}
-
-		chill(cnt=1) {
-			this.fx_repeat('chill',cnt*2,25,50);
-		}
-
-		fireworks(cnt=1) {
-			this.fx_repeat('fireworks',cnt*3,500,700);
-		}
-
-		mega() {
-		  this.fountain(2);	
-		  setOverTimeout(() => { this.sparks(1); },250)
-		  setOverTimeout(() => { this.sparks(1); },500)
-		  setOverTimeout(() => { this.sparks(1); },750)
-		  setOverTimeout(() => { this.sparks(1); },1000)
-		  setOverTimeout(() => { this.sparks(1); },1250)
-		  setOverTimeout(() => { this.sparks(1); },1500)
-		  setOverTimeout(() => { this.sparks(1); },1750)
-		  setOverTimeout(() => { this.sparks(1); },2000)
-		  setOverTimeout(() => { this.sparks(1); },2250)
-		  setOverTimeout(() => { this.confetti(3); },1900)
-		  setOverTimeout(() => { this.confetti(3); },2200)
-		}
-
-		hell() {
-
-		  for (var i=0;i<4;i++) {
-		  	setOverTimeout(() => { this.heartsplode(1); },0 + (i*110))	
-		  }
-		  for (var i=0;i<5;i++) {
-				setOverTimeout(() => { this.sparks(1); },1800 + (80*i))
-		  }
-		  for (var i=0;i<3;i++) {
-				setOverTimeout(() => { this.boom(1); },2100 + (50*i))
-		  }
-		}
-
-		fireworks_show() {
-		  for (var i=0;i<15;i++) {
-		  	setOverTimeout(() => { this.fireworks(getRndInteger(0,2)); },(i*1000) + (i*getRndInteger(250,700)))	
-		  }
-	  }
-
 }
 
 function getRndInteger(min, max) {

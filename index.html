@@ -9,48 +9,58 @@
 <link rel="stylesheet" href="overfx.css" id="page_style">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
 <!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> 
+-->
 <script src="fx/overfx.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <button id="controlz" class="control_icon" onclick="toggle_controls();">🠻🠻</button>
 <div id="controls" class="controls">
-  <button id="controly" style="width:30px;" onclick="toggle_controls();">🠹🠹</button>
-<br>
   <button onClick="" class="toggle"><label for="bgt"><input type="checkbox" id="bgt" checked="true" onclick="toggle_bg();">🗔</label></button>
   <button onClick="" class="toggle"><label for="logt"><input type="checkbox" id="logt" checked="true" onclick="toggle_logo()">🖾</label></button>
 <br>
   <button onClick="" class="toggle"><label for="vol"><input type="checkbox" id="vol" checked="true" onclick="ofx.audio_toggle();">🕪</label></button>
   <button onClick="ofx.stop()" class="toggle" style="color:red;">🛑</button>
 <br>
-	<button onClick="ofx.sparks()">Sparks</button><br>
-	<button onClick="ofx.fountain()">Fountain</button><br>
-	<button onClick="ofx.confetti()">Confetti</button><br>	
-	<button onClick="ofx.heart()">Heart</button><br>	
-	<button onClick="ofx.spray()">Spray</button><br>
-	<button onClick="ofx.boom()">Boom!</button><br>	
-	<button onClick="ofx.chill()">Chill</button><br>
-	<button onClick="ofx.fireworks()">Fireworks</button><br>	
-	<button onClick="ofx.heartsplode()">💔Splode</button><br>	
-	<button onClick="ofx.sparks(14)">Sparks!</button><br>
-	<button onClick="ofx.fountain(5)">Fountains!</button><br>
-	<button onClick="ofx.confetti(10)">Confetti!</button><br>	
-	<button onClick="ofx.mega()">Mega-Mega</button><br>	
-	<button onClick="ofx.hell()">Mega-Hell</button><br>	
-	<button onClick="ofx.fireworks_show()">July 4th</button><br>	
+	<button onClick="ofx.canned_sparks()">Sparks</button><br>
+	<button onClick="ofx.canned_fountain()">Fountain</button><br>
+	<button onClick="ofx.canned_confetti()">Confetti</button><br>	
+	<button onClick="ofx.canned_heart()">Heart</button><br>	
+	<button onClick="ofx.canned_spray()">Spray</button><br>
+	<button onClick="ofx.canned_boom()">Boom!</button><br>	
+	<button onClick="ofx.canned_chill()">Chill</button><br>
+	<button onClick="ofx.canned_fireworks()">Fireworks</button><br>	
+	<button onClick="ofx.canned_heartsplode()">💔Splode</button><br>	
+	<button onClick="ofx.canned_sparks(14)">Sparks!</button><br>
+	<button onClick="ofx.canned_fountain(5)">Fountains!</button><br>
+	<button onClick="ofx.canned_confetti(10)">Confetti!</button><br>	
+	<button onClick="ofx.canned_mega()">Mega-Mega</button><br>	
+	<button onClick="ofx.canned_hell()">Mega-Hell</button><br>	
+	<button onClick="ofx.canned_fireworks_show()">July 4th</button><br>
+	<button onClick="add_canned_example()">DynamicCan</button><br>	
+	<button onClick="ofx.run_fx_timed('bullzeye',3,{},500,1000)">NonParticle1</button><br>
+	<button onClick="ofx.run_fx('ascension')">Spirits</button><br>
+	<button onClick="ofx.canned_pixelstix()">PixelStix</button><br>
+	<button onClick="ofx.canned_pixelstix2()">PStxMashup</button><br>
+	<button onClick="ofx.run_fx('pixelstix',{ image: './fx/assets/boom.png', bg_on: false})">PStixImg</button><br>
+
 </div>
 <div id="logo" class="logo">
-  <p class="rsyellow">OverFX by <a href="http://www.roguesignal.io" target="_BLANK_">RogueSignal.IO</a><p>
+  <p class="rsyellow">OverFx by <a href="http://www.roguesignal.io" target="_BLANK_">RogueSignal.IO</a><p>
   <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;"/>
   <p>Click Me!</p>
   <ul id="details" class="details">
-    <li> OverFX prevents click thru during effect (ie., OVER)
+    <li> OverFx prevents click thru during effect (ie., OVER)
     <li> Uses FX plugin architecture.  10 built-in FX.
     <li> Makes available full power of PhaserJS scenes.
-    <li> Simple to use in any Javascript or Web page
-    <li> Easy to modify or build new particle FX plugins
-    <li> See <a href="https://github.com/roboyeti/overfx" target="_BLANK_" id="readme">Git Project</a> for more.
+    <li> Simple to use in any Javascript or Web page.
+    <li> Easy to modify or build new particle FX plugins.
+    <li> Collect FX into a "canned" method collection to run a show.
+    <li> See code & <a href="https://github.com/roboyeti/overfx" target="_BLANK_" id="readme">Git Project</a> for more.
     <li> Uses Phaser-3.24.  Particle rotation issue on 3.5+
+    <li> Audio sourced from:
+        <a href="http://www.freesoundslibrary.com" target="_BLANK_">FreeSoundsLibrary</a> & 
+        <a href="http://pixabay.com" target="_BLANK_">Pixabay</a>
   <ul>
 </div>
 
@@ -60,21 +70,28 @@
   var ofx;
   window.onload = function() {
     console.log('Loaded!');
-    ofx = new OverFx({}) // debug:true
-  
+    ofx = new OverFx({ pre_canned: true, debug: false })
     logo = document.getElementById('logo');
-    logo.addEventListener("click", function(event) { this.blur(); ofx.fx_repeat('roguesignal',3); event.stopPropagation();}, false);
+    logo.addEventListener("click", function(event) { this.blur(); ofx.run_fx_timed('roguesignal',3); event.stopPropagation();}, false);
     document.getElementById('readme').addEventListener("click", function(event) { event.stopPropagation(); }, false);
   };
+
+  function add_canned_example() {
+    ofx.add_canned('lala',(cnt=1) => {
+      ofx.run_fx_timed('hearts',cnt*3,{},500,1000);
+      ofx.run_fx_timed('sparks',cnt*4,{},500,700);
+    })
+    ofx.canned_lala(3); // Note the new method name...
+  }
 
   function toggle_controls() {
     let controls = document.getElementById('controls');
     if (controls.style.visibility == "hidden" || controls.style.visibility == "") {
       controls.style.visibility = "visible";
-      document.getElementById('controlz').style.visibility = "hidden";
+      //document.getElementById('controlz').style.visibility = "hidden";
     } else {
       controls.style.visibility = "hidden";
-      document.getElementById('controlz').style.visibility = "visible";
+      //document.getElementById('controlz').style.visibility = "visible";
     }
   }
 
@@ -82,9 +99,11 @@
     if (bg_vis == true) { document.body.style.backgroundImage = 'none'; bg_vis = false; }
     else { document.body.style.backgroundImage = "url('assets/roguesignal_bg.png')"; bg_vis = true; }
   }
+
   function toggle_logo() {
     document.getElementById('logo').style.visibility = logo_vis ? "hidden" : "visible"
     logo_vis = logo_vis ? false : true
   }
+
 </script>
 </body>
