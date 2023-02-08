@@ -32,6 +32,9 @@ class OverFxScene extends Phaser.Scene {
   fx_preload() { console.error('You must add a fx_preload() cuntion to your FX plugin.') }
 
   create() {
+    if (this.config.shake) { this.cameras.main.shake(this.hold || 5000, this.config.shake || 0.003) }
+    if (this.config.flash) { this.cameras.main.flash(5000, 100, 100, 100) }
+
     this.fx_create()
   }
   fx_create() { console.error('You must add a fx_create() cuntion to your FX plugin.') }
@@ -63,7 +66,10 @@ class OverFxScene extends Phaser.Scene {
   kill_scene() {
     this.config.debug && console.log(this.constructor.name + ' cleanup...') 
 //    this.scene_ref.scene.scene.remove()
-    this.scene.remove()
+    try {
+      this.scene.remove()
+    } catch {
+    }
   }
 
   update(t,d) {

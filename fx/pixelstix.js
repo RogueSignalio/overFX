@@ -5,7 +5,7 @@ class Pixelstix extends OverFxScene {
     this.enable_cleanup = false
     pixelstix_counter += 1;
     this.counter = 0
-    this.image = this.config.image ? this.config.image : `${this.config.image_path}/RogueSignal_logo_tiny.png`
+    this.image = this.config.image || `${this.config.image_path}/RogueSignal_logo_tiny.png`
     this.bg_on = this.config.bg_on !== undefined ? this.config.bg_on : true;
     this.show_alpha = this.config.show_alpha !== undefined ? this.config.show_alpha : false;
   }
@@ -80,12 +80,12 @@ class Pixelstix extends OverFxScene {
 
     setOverTimeout(()=> { this.audio_play_detune('pixelstix',-300,0) },750)
     setOverTimeout(()=> { this.audio_play_detune('pixelstix',-300,0) },6900)
+    this.cameras.main.setPostPipeline(HueRotatePostFX)
 
   }
 
   fx_update() {
-      if (this.counter == 0) this.enable_cleanup = true
-//    console.log(this.counter)    
+    if (this.counter == 0) this.enable_cleanup = true
   }
 
   fx_check_alive() {

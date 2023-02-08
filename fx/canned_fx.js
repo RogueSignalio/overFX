@@ -84,4 +84,15 @@ const CannedFx = {
     },500)
   },
 
+  canned_wonderful(cnt=1) {
+    this.run_fx('vortex', { hold: 8000, fade: 1000 , shake: 0.008 })
+    setOverTimeout(() => {
+      this.run_fx_timed('bullzeye',4,{ shake: 0.015},800,1900)
+    },250)
+    setOverTimeout(() => {
+      this.run_fx('webfonttext',{ y: 240, shake: Phaser.Math.FloatBetween(0.006,0.012), blend: 2, hold:5000, fade: 300, text: 'W😜nderful!', font: 'Mochiy Pop One', font_size: 100, color: '#8888AA', border_color: '#7e47ce'})
+      this.run_fx('webfonttext',{ y: 300, shake: Phaser.Math.FloatBetween(0.002,0.006), blend: 1, hold:6000, fade: 300, text: 'W😜nderful!', font: 'Mochiy Pop One', font_size: 100, color: '#8888AA', border_color: '#7e47ce'})
+      this.run_fx('webfonttext',{ y: 360, blend: 0, hold:7000, fade: 1000, text: 'W😜nderful!', font: 'Mochiy Pop One', font_size: 100, color: '#8888AA', border_color: '#7e47ce'})
+    },500)
+  }
 };

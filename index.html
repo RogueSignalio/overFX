@@ -7,10 +7,10 @@
 <link rel="icon" href="assets/favicon.png">
 <title>OverFX by RogueSignal.io</title>
 <link rel="stylesheet" href="overfx.css" id="page_style">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
-<!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> 
--->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
+--><!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> 
+
 <script src="fx/overfx.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -38,20 +38,25 @@
 	<button onClick="ofx.canned_hell()">Mega-Hell</button><br>	
 	<button onClick="ofx.canned_fireworks_show()">July 4th</button><br>
 	<button onClick="add_canned_example()">DynamicCan</button><br>	
-	<button onClick="ofx.run_fx_timed('bullzeye',3,{},500,1000)">NonParticle1</button><br>
+	<button onClick="ofx.run_fx_timed('bullzeye',3,{},500,1000)">Wonderful1</button><br>
 	<button onClick="ofx.run_fx('ascension')">Spirits</button><br>
 	<button onClick="ofx.canned_pixelstix()">PixelStix</button><br>
 	<button onClick="ofx.canned_pixelstix2()">PStxMashup</button><br>
 	<button onClick="ofx.run_fx('pixelstix',{ image: './fx/assets/boom.png', bg_on: false})">PStixImg</button><br>
+	<button onClick="ofx.run_fx('ascension'); ofx.run_fx('webfonttext',{ hold: 8000, fade: 1300, text: 'C🤠🤠L!', font: 'Rancho', font_size: 120, color: '#FFDD44', border_color: '#785722'})">Webfont</button><br>
+	<button onClick="ofx.run_fx('vortex')">Shader</button><br>
+	<button onClick="ofx.run_fx('vortex', { shake: 0.007}); ofx.run_fx('webfonttext',{ blend: 2, hold: 6000, text: '👁', font: 'Roboto', font_size: 300, color: '#FFDD44', border_color: '#883300'})">Shaker</button><br>
+	<button onClick="ofx.canned_wonderful()">Wonderful2</button><br>
+	<button onClick="ofx.run_fx('invaders')">Invaders</button><br>
 
 </div>
 <div id="logo" class="logo">
-  <p class="rsyellow">OverFx by <a href="http://www.roguesignal.io" target="_BLANK_">RogueSignal.IO</a><p>
+  <p class="rsyellow">OverFx 0.7b by <a href="http://www.roguesignal.io" target="_BLANK_">RogueSignal.IO</a><p>
   <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;"/>
   <p>Click Me!</p>
   <ul id="details" class="details">
     <li> OverFx prevents click thru during effect (ie., OVER)
-    <li> Uses FX plugin architecture.  10 built-in FX.
+    <li> Uses FX plugin architecture.  14+ built-in FX.
     <li> Makes available full power of PhaserJS scenes.
     <li> Simple to use in any Javascript or Web page.
     <li> Easy to modify or build new particle FX plugins.
@@ -68,8 +73,8 @@
   var bg_vis = true
   var logo_vis = true
   var ofx;
+
   window.onload = function() {
-    console.log('Loaded!');
     ofx = new OverFx({ pre_canned: true, debug: false })
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { this.blur(); ofx.run_fx_timed('roguesignal',3); event.stopPropagation();}, false);

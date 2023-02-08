@@ -28,8 +28,8 @@ class OverFx {
 				transparent: true, 
 		    backgroundColor: 'rgba(0,0,0,0)',
         //parent: "gameContainer",
-			  canvasStyle: "position:absolute;top:0px;left:0px;border-style:solid;border-width:0px;z-index:-10000;",
-    		...ph_config
+			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;",
+        ...ph_config
     	});
 
       this.config = {
@@ -110,7 +110,8 @@ class OverFx {
     // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
     run_fx(name,config={}) {
       if (name.startsWith("canned_")) { this[name](config); return; }
-    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); this.loaded[name] = true; }) }
+//    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); this.loaded[name] = true; }) }
+    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
       else { this._run_scene(name,config); }
     }
 
@@ -122,8 +123,10 @@ class OverFx {
 	    script.id = `${name}.js`;
 	    script.src = `./fx/${name}.js`;
 	    document.body.append(script);
-      if (!onload) onload = ()=>{ this.loaded[name] = true; }
-	    script.onload = onload;
+// this.loaded[name] = true; }
+//	    script.onload = onload;
+      if (!onload) onload = ()=>{ };
+	    script.onload = ()=> { this.loaded[name] = true; onload.call(this); }
       this.config.debug && console.log(`${name} loaded.`)
     }
 
@@ -199,4 +202,19 @@ function getRndInteger(min, max) {
 
 function getInt(num) {
   return Math.floor(num)
+}
+
+window.loaded_js = {}
+function load_js(name,onload=function(){}) {
+  if (window.loaded_js[name]) return;
+  const script = document.createElement('script');
+  script.id = `${name}`;
+  script.src = `${name}`;
+  document.body.append(script);
+  //if (!onload) onload = ()=>{ window.loaded_js[name] = true; }
+  //script.onload = onload;
+//  if (!onload) onload = ()=>{ };
+  script.onload = ()=> { this.loaded_js[name] = true; onload.call(this); }
+
+  console.log(`${name} loaded.`)
 }

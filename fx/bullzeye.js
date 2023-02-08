@@ -80,7 +80,6 @@ class Bullzeye extends OverFxScene {
 
   fx_check_alive() {
     let ret = !(this.fade_out == true && this.fade <= 0);
-//    console.log(ret + ',' + this.fade);
     return ret
   }
 }
