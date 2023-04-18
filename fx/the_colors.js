@@ -2,7 +2,7 @@
 Authors: BlackRogue01
 Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 ===========================================================================*/
-class Fireworks extends OverFxScene {
+class TheColors extends OverFxScene {
   constructor (config={}) {
     super(config);
     this.enable_cleanup = false
