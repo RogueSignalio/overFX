@@ -28,7 +28,7 @@ class OverFx {
 				transparent: true, 
 		    backgroundColor: 'rgba(0,0,0,0)',
         //parent: "gameContainer",
-			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;",
+			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;visibility:hidden;",
         ...ph_config
     	});
 
@@ -57,8 +57,8 @@ class OverFx {
     }
 
     // Raise or lower to the z-index min or max layer
-    to_front(zindex=this.config.z_index) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.focus(); }
-    to_back(zindex=(this.config.z_index*-1)) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.blur(); }
+    to_front(zindex=this.config.z_index) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.focus(); this.engine.canvas.style.visibility = 'visible'; }
+    to_back(zindex=(this.config.z_index*-1)) { this.engine.canvas.style.zIndex = zindex; this.engine.canvas.style.visibility = 'hidden'; this.engine.canvas.blur(); }
     
     // Set volume from 0 to 1
     volume(vol=null) {
@@ -90,7 +90,7 @@ class OverFx {
     // Run FX a number of X times with min and max delays in ms
     // Deprecated, see run_fx_timed()
 		fx_repeat(name,cnt=1,delay_min=150,delay_max=150) {
-      console.info('Deprecated.  Use run_fx_repeat() instead.');
+      console.info('Deprecated.  Use run_fx_timed() instead.');
 			for(var i=0;i<cnt;i++) {
 				setOverTimeout(() => {
 					this.run_fx(name); 
@@ -109,9 +109,9 @@ class OverFx {
 
     // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
     run_fx(name,config={}) {
-      if (name.startsWith("canned_")) { this[name](config); return; }
+      if (name.startsWith("canned_")) { this[name](1); }
 //    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); this.loaded[name] = true; }) }
-    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
+    	else if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
       else { this._run_scene(name,config); }
     }
 
