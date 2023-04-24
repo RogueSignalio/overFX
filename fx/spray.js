@@ -5,7 +5,7 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 class Spray extends OverFxScene {
 	fx_preload() {
     this.load.image('spray', `${this.config.image_path}/white.png`);
-		this.load.audio('spray', [`${this.config.audio_path}/water-splash.mp3`]);
+		this.load.audio('spraya', [`${this.config.audio_path}/water-splash.mp3`]);
 	}
 
 	fx_create() {
@@ -65,7 +65,7 @@ class Spray extends OverFxScene {
         });
 			},0+(50*i))
 		}
-		this.audio_play_detune('spray')
+		this.audio_play_detune('spraya')
 	}
 
 }

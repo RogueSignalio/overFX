@@ -10,7 +10,7 @@ class Heartsplode extends OverFxScene {
 
 	fx_preload() {
     this.load.image('heart', `${this.config.image_path}/heart.png`);
-		this.load.audio('squeak', `${this.config.audio_path}/squeakytoy.mp3`);
+		this.load.audio('squeaka', `${this.config.audio_path}/squeakytoy.mp3`);
 		this.load.audio('pop', `${this.config.audio_path}/pop.mp3`);
 	}
 
@@ -38,7 +38,7 @@ class Heartsplode extends OverFxScene {
 		}
 		setOverTimeout(() => { this.enable_cleanup = true },2500)
 
-		this.audio_play_detune('squeak',-100,100)
+		this.audio_play_detune('squeaka',-100,100)
 	}
 
 	pop_heart(t) {

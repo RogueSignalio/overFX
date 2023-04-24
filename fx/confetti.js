@@ -4,8 +4,8 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 ===========================================================================*/
 class Confetti extends OverFxScene {
 	fx_preload() {
-    this.load.image('confetti', `${this.config.image_path}/confetti.png`);
-		this.load.audio('confetti', `${this.config.audio_path}/pop.mp3`);
+    this.load.image('confetti1', `${this.config.image_path}/confetti.png`);
+		this.load.audio('confettia', `${this.config.audio_path}/pop.mp3`);
 	}
 
 	fx_create() {
@@ -24,8 +24,8 @@ class Confetti extends OverFxScene {
 			tint: [ 0xEE8844, 0xFF3333, 0xDD77DD, 0x8888FF, 0xFF88FF, 0xFFFFFF ],
     }
 
-    for (var i=0;i<10;i++) { this.add_emitter('confetti',conf) }
-		this.audio_play_detune('confetti',-300,300)
+    for (var i=0;i<10;i++) { this.add_emitter('confetti1',conf) }
+		this.audio_play_detune('confettia',-300,300)
 	}
 
 }

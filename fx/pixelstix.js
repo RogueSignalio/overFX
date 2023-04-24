@@ -13,7 +13,7 @@ class Pixelstix extends OverFxScene {
   fx_preload() {
     this.load.image('pixelstix'+pixelstix_counter, this.image);
     this.load.image('pixel', `${this.config.image_path}/16x16.png`);
-		this.load.audio('pixelstix', [`${this.config.audio_path}/taser-sound.mp3`,]);
+		this.load.audio('pixelstixa', [`${this.config.audio_path}/taser-sound.mp3`,]);
     if (this.bg_on) this.engine.run_fx('background',{ bgcolor: 0x000000, hold: 10000, fade: 500})
   }
 
@@ -78,8 +78,8 @@ class Pixelstix extends OverFxScene {
       }
     }
 
-    setOverTimeout(()=> { this.audio_play_detune('pixelstix',-300,0) },750)
-    setOverTimeout(()=> { this.audio_play_detune('pixelstix',-300,0) },6900)
+    setOverTimeout(()=> { this.audio_play_detune('pixelstixa',-300,0) },750)
+    setOverTimeout(()=> { this.audio_play_detune('pixelstixa',-300,0) },6900)
     this.cameras.main.setPostPipeline(HueRotatePostFX)
 
   }
