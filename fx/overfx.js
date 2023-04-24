@@ -35,7 +35,8 @@ class OverFx {
       this.config = {
         debug: false,
         audio_on: true,
-        volume: 0.8,
+        preload: false,
+        volume: 0.25,
         z_index: 10000,
         pre_canned: false,
         image_path: 'fx/assets/',
@@ -118,7 +119,7 @@ class OverFx {
     // Load anything in the FX subdir, typically an actual FX plugin.
     // To load and immediately run, use run_fx() instead.
     load_fx(name,onload=null) {
-      if (this.loaded[name]) return;
+      if ((this.preloaded) || (this.loaded[name])) return;
 			const script = document.createElement('script');
 	    script.id = `${name}.js`;
 	    script.src = `./fx/${name}.js`;
