@@ -61,7 +61,7 @@
     <li> Simple to use in any Javascript or Web page.
     <li> Easy to modify or build new particle FX plugins.
     <li> Collect FX into a "canned" method collection to run a show.
-    <li> See code & <a href="https://github.com/roguesignalio/overfx" target="_BLANK_" id="readme">Git Project</a> for more.
+    <li> See code & <a href="https://github.com/roguesignalio/overFX" target="_BLANK_" id="readme">Git Project</a> for more.
     <li> Uses Phaser-3.24.  Particle rotation issue on 3.5+
     <li> Audio sourced from:
         <a href="http://www.freesoundslibrary.com" target="_BLANK_">FreeSoundsLibrary</a> & 
@@ -75,6 +75,7 @@
   var ofx;
 
   window.onload = function() {
+    toggle_controls();
     ofx = new OverFx({ pre_canned: true, debug: false })
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { this.blur(); ofx.run_fx_timed('roguesignal',3); event.stopPropagation();}, false);
