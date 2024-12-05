@@ -13,6 +13,7 @@ nonsense to work.  Really, all you need is the "fx" directory.
 
 Add something like this to the html:
 ------------------------------------------
+```
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
 <script src="fx/over_fx.js" crossorigin="anonymous"></script>
 <script>
@@ -22,9 +23,11 @@ Add something like this to the html:
     ofx.fx_repeat('sparks')
   };
 </script>
+```
 
 Config Options:
 ------------------------------------------
+```
   audio: Boolean to enable or disable audio (default=true)
   debug: Boolean to enable some debugging log (default=false)
   volume: 0 <=> 1.0  volume level (default = 1)
@@ -33,6 +36,7 @@ Config Options:
   z_index: Max/Min level for z_index.  Min will be this value * -1, max will be the value. Default = 10000
   pre_canned: Boolean to include premade canned FX methods (default=false)
   Example: ofx = new OverFx({ audio: false, debug: true, image_path: '/assets' })
+```
 
 Phaser Config Options:
 ------------------------------------------
