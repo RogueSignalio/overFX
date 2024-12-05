@@ -1,4 +1,6 @@
-OverFx is a simple FX plugin engine to create full screen effects over your browser app.
+DEMO: https://roguesignalio.github.io/overFX/
+
+OverFX is a simple FX plugin engine to create full screen effects over your browser app.
 
 Being built on Phaser JS v3, using scenes for the overlays, you have full access to the
 Phaser particle engine and more!
