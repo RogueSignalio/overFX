@@ -48,7 +48,6 @@ class OverFx {
       this.engine.canvas.style.zIndex = this.config.z_index * -1
       this.counter = 0; // Used to generate unique scene IDs.  Will reset when scene count == 0
     	this.loaded = {}; // Store list of loaded JS scripts
-      this.loading = {}; // Store list of loaded JS scripts
       this.load_fx('overfx_timer'); // Base FX setOverTimeouts
       this.load_fx('overfx_scene'); // Base FX scene
       this.load_fx('canned_fx',() => { Object.assign(this,CannedFx); }); // Built-in "canned" FX
@@ -126,18 +125,18 @@ class OverFx {
       this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
       if (!onload) onload = ()=>{ };
       let script
-      script = document.getElementById('sparks.js')
-      if (script == null) {
-  			script = document.createElement('script');
-  	    script.id = `${name}.js`;
-        let min = this.config.minified_modules ? '.min' : '' 
-  	    script.src = `${this.config.modules_path}/${name}${min}.js`;
-      }
-      script.addEventListener("load", 
-        ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); },
-        true
-      )
-	    // script.onload = ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); }
+      // script = document.getElementById('sparks.js')
+      // if (script == null) {
+			script = document.createElement('script');
+	    script.id = `${name}.js`;
+      let min = this.config.minified_modules ? '.min' : '' 
+	    script.src = `${this.config.modules_path}/${name}${min}.js`;
+      // }
+      // script.addEventListener("load", 
+      //   ()=> { this.loaded[name] = true; onload.call(this); },
+      //   // true
+      // )
+	    script.onload = ()=> { this.loaded[name] = true; onload.call(this); }
       document.body.append(script);
       this.config.debug && console.log(`${name} loaded.`)
     }
