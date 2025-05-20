@@ -17,8 +17,8 @@ class Fireworks extends OverFxScene {
 	}
 
 	fx_create() {
-    this.firework = this.add.particles('fsparks');
-    this.bomb = this.add.particles('fsparks');
+    this.firework = 'fsparks'; //this.add.particles('fsparks');
+    this.bomb = 'fsparks'; //this.add.particles('fsparks');
     var i = 0
     for (i=0;i<2;i++) { setOverTimeout(this.shell(),0+(1000*i)) }
     setOverTimeout(() => {

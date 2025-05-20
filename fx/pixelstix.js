@@ -80,8 +80,7 @@ class Pixelstix extends OverFxScene {
 
     setOverTimeout(()=> { this.audio_play_detune('pixelstixa',-300,0) },750)
     setOverTimeout(()=> { this.audio_play_detune('pixelstixa',-300,0) },6900)
-    this.cameras.main.setPostPipeline(HueRotatePostFX)
-
+//    this.cameras.main.setPostPipeline(HueRotatePostFX)
   }
 
   fx_update() {

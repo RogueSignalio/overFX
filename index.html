@@ -7,9 +7,7 @@
 <link rel="icon" href="assets/favicon.png">
 <title>OverFX by RogueSignal.io</title>
 <link rel="stylesheet" href="overfx.css" id="page_style">
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.24.1/phaser.min.js" crossorigin="anonymous"></script>
---><!-- Phaser 3.5+ changed rotation behavior on particles!?!?!?  Need to find some answers /-->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" crossorigin="anonymous"></script> 
+<script src="https://cdn.jsdelivr.net/npm/phaser@v3.88.2/dist/phaser.min.js" crossorigin="anonymous"></script>
 
 <script src="fx/overfx.js" crossorigin="anonymous"></script>
 </head>
@@ -76,7 +74,12 @@
 
   window.onload = function() {
     toggle_controls();
-    ofx = new OverFx({ pre_canned: true, debug: false })
+    ofx = new OverFx({ 
+      pre_canned: true, 
+      debug: true,
+      modules_path: 'https://cdn.jsdelivr.net/gh/RogueSignalio/overFX/fx',
+      minified_modules: true,      
+    })
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { this.blur(); ofx.run_fx_timed('roguesignal',3); event.stopPropagation();}, false);
     document.getElementById('readme').addEventListener("click", function(event) { event.stopPropagation(); }, false);

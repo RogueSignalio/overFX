@@ -27,7 +27,6 @@ class OverFx {
 		    height: window.innerHeight,
 				transparent: true, 
 		    backgroundColor: 'rgba(0,0,0,0)',
-        //parent: "gameContainer",
 			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;visibility:hidden;",
         ...ph_config
     	});
@@ -39,8 +38,10 @@ class OverFx {
         volume: 0.25,
         z_index: 10000,
         pre_canned: false,
-        image_path: 'fx/assets/',
-        audio_path: 'fx/assets/audio',
+        image_path: './fx/assets',
+        audio_path: './fx/assets/audio',
+        modules_path: './fx',
+        minified_modules: false,
         ...config
       }
 
@@ -111,7 +112,6 @@ class OverFx {
     // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
     run_fx(name,config={}) {
       if (name.startsWith("canned_")) { this[name](1); }
-//    	if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); this.loaded[name] = true; }) }
     	else if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
       else { this._run_scene(name,config); }
     }
@@ -119,16 +119,16 @@ class OverFx {
     // Load anything in the FX subdir, typically an actual FX plugin.
     // To load and immediately run, use run_fx() instead.
     load_fx(name,onload=null) {
+      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
       if (this.config.preload) this.loaded[name] = true;
       if (this.loaded[name]) return;
 			const script = document.createElement('script');
 	    script.id = `${name}.js`;
-	    script.src = `./fx/${name}.js`;
-	    document.body.append(script);
-// this.loaded[name] = true; }
-//	    script.onload = onload;
+      let min = this.config.minified_modules ? '.min' : '' 
+	    script.src = `${this.config.modules_path}/${name}${min}.js`;
       if (!onload) onload = ()=>{ };
 	    script.onload = ()=> { this.loaded[name] = true; onload.call(this); }
+      document.body.append(script);
       this.config.debug && console.log(`${name} loaded.`)
     }
 
@@ -161,10 +161,18 @@ class OverFx {
       this['canned_'+name] = code;
     }
 
+    next_counter() {
+      this.counter = this.counter + 1
+      return this.counter
+    }
+
     // Runs a loaded FX scene.
     _run_scene(name,config={}) {
+      let count = this.next_counter()
+      // console.log(`${name}/${count}`)
+
       var config = {
-        key: `${name}/${this.counter}`,
+        key: `${name}/${count}`,
         engine: this,
         ...this.config,
         ...config
@@ -173,11 +181,11 @@ class OverFx {
       this.config.debug && console.log("Run " + config.key, config)
       var fxscene = eval(`new ${cname}(config)`)
       this.engine.scene.add(config.key, fxscene, true, {} );
-      if (this.counter == 0) {
+      if (this.counter == 1) {
         this.to_front()
         this._check_timer()
       }
-      this.counter++;
+//      this.counter++;
     }
 
     _check_timer() {
@@ -218,5 +226,5 @@ function load_js(name,onload=function(){}) {
 //  if (!onload) onload = ()=>{ };
   script.onload = ()=> { this.loaded_js[name] = true; onload.call(this); }
 
-  console.log(`${name} loaded.`)
+  this.config.debug && console.log(`${name} loaded.`)
 }

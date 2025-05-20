@@ -9,7 +9,7 @@ class Hearts extends OverFxScene {
 	}
 
 	fx_create() {
-    var heart1 = this.add.particles('heart1');
+    // var heart1 = this.add.particles('heart1');
 
     var conf = {
       x: this.w/8 + getRndInteger(-this.w/10,this.w/10),
@@ -27,7 +27,7 @@ class Hearts extends OverFxScene {
     }
 
     for (var i=0;i<2;i++) {
-      this.add_emitter(heart1,conf)
+      this.add_emitter('heart1',conf)
 		}
 
 		this.audio_play_detune('squeak',-100,100)

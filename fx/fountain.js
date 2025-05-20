@@ -9,7 +9,7 @@ class Fountain extends OverFxScene {
 	}
 
 	fx_create() {
-	  var particles = this.add.particles('fountain1');
+	  var particles = 'fountain1' //this.add.particles('fountain1');
 		var offset = this.h > 690 ? (this.h - 690) : 0
 
     for (var i=0;i<4;i++) {

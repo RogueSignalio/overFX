@@ -28,8 +28,8 @@ class Boom extends OverFxScene {
 		}
 
     for (var i=0;i<3;i++) {
-      var myp = this.add_emitter('particle1',conf);
-      this.add_emitter(myp,Object.assign(conf,{
+      // var myp = this.add_emitter('particle1',conf);
+      this.add_emitter('particle1',Object.assign(conf,{
         scale: { start: 0.5, end: 3.5 },
         speed: 50,
         accelerationY: 0,
@@ -38,7 +38,7 @@ class Boom extends OverFxScene {
         maxParticles: 6,
         tint: 0xFFAA44,
       }));
-      this.add_emitter(myp,Object.assign(conf,{
+      this.add_emitter('particle1',Object.assign(conf,{
         scale: { start: 0.3, end: 2.5 },
         speed: 30,
         accelerationY: 0,

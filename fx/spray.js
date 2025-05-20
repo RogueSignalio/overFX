@@ -9,12 +9,12 @@ class Spray extends OverFxScene {
 	}
 
 	fx_create() {
-    this.particles = this.add.particles('spray');
+    // this.particles = this.add.particles('spray');
 		this.offset = this.h > 690 ? (this.h - 690) : 0
 
     for (var i=0;i<12;i++) {
       setOverTimeout(() => {
-        this.add_emitter(this.particles,{
+        this.add_emitter('spray',{
           x: this.w/2,// - (i * 10),
           y: this.h - 5,
           lifespan: 2000 + (this.offset*2),
@@ -30,7 +30,7 @@ class Spray extends OverFxScene {
 					tint: [ 0x9999FF, 0x7799FF ],
 					quantity: 10,
         });
-        this.add_emitter(this.particles,{
+        this.add_emitter('spray',{
           x: this.w/2,// - (i * 10),
           y: this.h - 5,
           lifespan: 2000 + (this.offset*3),
@@ -49,7 +49,7 @@ class Spray extends OverFxScene {
 					tint: [ 0xAAAAFF, 0x99AAFF ],
 					quantity: 10,
         });
-        this.add_emitter(this.particles,{
+        this.add_emitter('spray',{
           x: this.w/2,// - (i * 10),
           y: this.h - 5,
           lifespan: 2000 + (this.offset*3),

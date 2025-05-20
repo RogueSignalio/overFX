@@ -47,14 +47,15 @@ class Chill extends OverFxScene {
 
       alpha: { start: 1, end: 0 },
       gravityY: 100,
+      gravityX: getRndInteger(-100,100),
       blendMode: 'SCREEN',
       frequency: 10,
       tint: [ 0xFFFFFF, 0xDDDDFF, 0xBBBBFF ]
     }
 
 		this.flake1 = this.add_emitter('snow',conf);
-		this.flake1.addGravityWell(highWind.processor);
-		this.flake1.addGravityWell(lowWind.processor);
+		this.flake1.createGravityWell(highWind.processor);
+		this.flake1.createGravityWell(lowWind.processor);
 		this.audio_play_detune('wind',-300,300)
 
     setOverTimeout(()=>{ this.stop_emitters() },6500)

@@ -15,7 +15,7 @@ class Heartsplode extends OverFxScene {
 	}
 
 	fx_create() {
-    this.heart1 = this.add.particles('heart');
+    this.heart1 = 'heart' //this.add.particles('heart');
 
     var conf = {
       x: this.w/8 + getRndInteger(-this.w/10,this.w/10),

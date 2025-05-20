@@ -4,8 +4,8 @@ class OverFxScene extends Phaser.Scene {
     this.config = {
       audio_on: true,
       debug: false,
-      image_path: 'fx/assets/',
-      audio_path: 'fx/assets/audio/',
+      image_path: 'fx/assets',
+      audio_path: 'fx/assets/audio',
       volume: 0.8,
       ...config
     }
@@ -26,10 +26,12 @@ class OverFxScene extends Phaser.Scene {
   preload() {
     this.w = this.game.canvas.width; //window.innerWidth
     this.h = this.game.canvas.height; //window.innerHeight
+    this.config.debug && console.log('fx preload')    
     this.fx_preload()
+    this.config.debug && console.log('fx preload end')    
 //    if (this.bg_on) this.engine.run_fx('background',{ bgcolor: 0x000000, hold: (this.hold + (this.fade * 5)), fade: this.fade/2})
   }
-  fx_preload() { console.error('You must add a fx_preload() cuntion to your FX plugin.') }
+  fx_preload() { console.error('You must add a fx_preload() function to your FX plugin.') }
 
   create() {
     if (this.config.shake) { this.cameras.main.shake(this.hold || 5000, this.config.shake || 0.003) }
@@ -52,7 +54,13 @@ class OverFxScene extends Phaser.Scene {
     }
   }
 
-  add_emitter(particle,config) {
+  add_emitter(prt,conf) {
+    let mypart = this.add.particles(0, 0, prt, conf)
+    if (this.scene_ref == undefined) { this.scene_ref = mypart; }
+    this.emitters.push(mypart)
+    return mypart;
+  }
+  add_emitter_old(particle,config) {
     let mypart = particle.type == 'ParticleEmitterManager' ? particle : this.add.particles(particle);
     if (this.scene_ref == undefined) { this.scene_ref = mypart; }
     this.emitters.push(mypart.createEmitter(config));
@@ -75,9 +83,8 @@ class OverFxScene extends Phaser.Scene {
   update(t,d) {
     this.fx_update(t,d)
     if (this.enable_cleanup == false) { return; }
-//    if (this.scene_ref == undefined) { return; }
+    if (this.scene_ref == undefined) { return; }
     this.active = this.fx_check_alive()
-    
     if (!this.active) { this.kill_scene() }
   }
   fx_update(t,d) {  }
