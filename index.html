@@ -77,8 +77,8 @@
     ofx = new OverFx({ 
       pre_canned: true, 
       debug: true,
-      modules_path: 'https://cdn.jsdelivr.net/gh/RogueSignalio/overFX@latest/fx',
-      minified_modules: true,      
+      // modules_path: 'https://cdn.jsdelivr.net/gh/RogueSignalio/overFX@v1.0.1/fx',
+      // minified_modules: true,      
     })
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { this.blur(); ofx.run_fx_timed('roguesignal',3); event.stopPropagation();}, false);
