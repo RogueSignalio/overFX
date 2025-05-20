@@ -14,6 +14,8 @@ class Invaders extends OverFxScene {
     this.load.spritesheet('invader2', `${this.config.image_path}/invader2.png`, { frameWidth: 44, frameHeight: 32 });
     this.load.spritesheet('invader3', `${this.config.image_path}/invader3.png`, { frameWidth: 48, frameHeight: 32 });
     this.load.spritesheet('boom', `${this.config.image_path}/explosion.png`, { frameWidth: 64, frameHeight: 64, endFrame: 23 });
+    // this.load.audio('booma', [`${this.config.audio_path}/explosion.mp3`]);
+    this.load.audio('booma', [`${this.config.audio_path}/squeakytoy.mp3`]);
 
 //		this.load.audio('ascension', [`${this.config.audio_path}/choir-transition-sound.mp3`,]);
     if (this.bg_on) this.engine.run_fx('background',{ bgcolor: 0x000000, hold: (this.hold + (this.fade * 5)), fade: this.fade/2})
@@ -41,9 +43,11 @@ class Invaders extends OverFxScene {
       //    this.audio_play_detune('ascension',-600,100)
       ship.once('pointerdown', function () {
         //  Sprite will have visible = false set when the animation finishes repeating because of 'hideOnComplete' property
-        ship.setTintFill = ship.tint
+        //ship.setTintFill = ship.tint
         this.play('explode');
-      });
+        console.log(this)      
+        this.scene.audio_play_detune('booma',-400,400)
+      }); //.bind(this),ship);
       ship.alpha = 0
       this.tweens.add({
         targets: ship,

@@ -64,11 +64,16 @@ class Pixelstix extends OverFxScene {
           delay: i / 10,
           yoyo: true,
           repeat: 0,
-          hold: 6000
+          hold: 6000,
+          parent: this,
         });
-        tween.setCallback('onComplete',function() { this.counter -= 1 },[this],this)
+        tween.setCallback('onComplete',function() { 
+          this.counter -= 1 
+ // console.log('psfix_down', this.counter)
+        }.bind(this),[this])//,this)
 
         this.counter += 1
+//console.log('psfix_up',this.counter)
       }
 
       x++;
@@ -84,7 +89,8 @@ class Pixelstix extends OverFxScene {
   }
 
   fx_update() {
-    if (this.counter == 0) this.enable_cleanup = true
+    if (this.counter == 0) { this.enable_cleanup = true }
+    // if (this.enable_cleanup) { this.fx_check_alive()}
   }
 
   fx_check_alive() {

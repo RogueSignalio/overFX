@@ -83,7 +83,7 @@ class OverFxScene extends Phaser.Scene {
   update(t,d) {
     this.fx_update(t,d)
     if (this.enable_cleanup == false) { return; }
-    if (this.scene_ref == undefined) { return; }
+    // if (this.scene_ref == undefined) { return; }
     this.active = this.fx_check_alive()
     if (!this.active) { this.kill_scene() }
   }

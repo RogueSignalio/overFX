@@ -19,6 +19,7 @@ See README
 // * Add asset loader to OverFxScene so as to guarantee unique names.
 // * Add some non-particle examples.
 //
+let OverFXVersion = 'v1.0.5'
 class OverFx {
     constructor (config={},ph_config={}) {
     	this.engine = new Phaser.Game({
@@ -146,7 +147,7 @@ class OverFx {
       if (this.engine.scene.scenes.length > 0) { this.to_front(); return true; }
       else {
         this.config.debug && console.log('No scenes.');
-        this.to_back(); this.counter = 0; return false;
+        this.to_back(); this.counter = 1; return false;
       }
     }
 
@@ -190,7 +191,7 @@ class OverFx {
       this.config.debug && console.log("Run " + config.key, config)
       var fxscene = eval(`new ${cname}(config)`)
       this.engine.scene.add(config.key, fxscene, true, {} );
-      if (this.counter == 1) {
+      if (this.counter >= 1) {
         this.to_front()
         this._check_timer()
       }
@@ -211,7 +212,7 @@ class OverFx {
       for (var scene of this.engine.scene.scenes) {        
         scene.kill_scene();
       }
-      this.counter = 0
+      this.counter = 1
     }
 }
 
