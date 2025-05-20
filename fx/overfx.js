@@ -48,6 +48,7 @@ class OverFx {
       this.engine.canvas.style.zIndex = this.config.z_index * -1
       this.counter = 0; // Used to generate unique scene IDs.  Will reset when scene count == 0
     	this.loaded = {}; // Store list of loaded JS scripts
+      this.loading = {}; // Store list of loaded JS scripts
       this.load_fx('overfx_timer'); // Base FX setOverTimeouts
       this.load_fx('overfx_scene'); // Base FX scene
       this.load_fx('canned_fx',() => { Object.assign(this,CannedFx); }); // Built-in "canned" FX
@@ -119,15 +120,18 @@ class OverFx {
     // Load anything in the FX subdir, typically an actual FX plugin.
     // To load and immediately run, use run_fx() instead.
     load_fx(name,onload=null) {
-      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
+      if (this.loading[name]) return;
       if (this.config.preload) this.loaded[name] = true;
+      if (this.loading[name]) return;
+      this.loading[name] = true;
+      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
       if (this.loaded[name]) return;
 			const script = document.createElement('script');
 	    script.id = `${name}.js`;
       let min = this.config.minified_modules ? '.min' : '' 
 	    script.src = `${this.config.modules_path}/${name}${min}.js`;
       if (!onload) onload = ()=>{ };
-	    script.onload = ()=> { this.loaded[name] = true; onload.call(this); }
+	    script.onload = ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); }
       document.body.append(script);
       this.config.debug && console.log(`${name} loaded.`)
     }

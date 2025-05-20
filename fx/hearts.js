@@ -9,8 +9,6 @@ class Hearts extends OverFxScene {
 	}
 
 	fx_create() {
-    // var heart1 = this.add.particles('heart1');
-
     var conf = {
       x: this.w/8 + getRndInteger(-this.w/10,this.w/10),
       y: this.h/3 + getRndInteger(-this.h/10,this.h/10),
