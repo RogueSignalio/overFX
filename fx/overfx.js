@@ -120,18 +120,24 @@ class OverFx {
     // Load anything in the FX subdir, typically an actual FX plugin.
     // To load and immediately run, use run_fx() instead.
     load_fx(name,onload=null) {
-      if (this.loading[name]) return;
       if (this.config.preload) this.loaded[name] = true;
-      if (this.loading[name]) return;
-      this.loading[name] = true;
-      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
       if (this.loaded[name]) return;
-			const script = document.createElement('script');
-	    script.id = `${name}.js`;
-      let min = this.config.minified_modules ? '.min' : '' 
-	    script.src = `${this.config.modules_path}/${name}${min}.js`;
+      if (`${name}.js`)
+      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
       if (!onload) onload = ()=>{ };
-	    script.onload = ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); }
+      let script
+      script = document.getElementById('sparks.js')
+      if (script == null) {
+  			script = document.createElement('script');
+  	    script.id = `${name}.js`;
+        let min = this.config.minified_modules ? '.min' : '' 
+  	    script.src = `${this.config.modules_path}/${name}${min}.js`;
+      }
+      script.addEventListener("load", 
+        ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); },
+        true
+      )
+	    // script.onload = ()=> { this.loading[name] = false; this.loaded[name] = true; onload.call(this); }
       document.body.append(script);
       this.config.debug && console.log(`${name} loaded.`)
     }
