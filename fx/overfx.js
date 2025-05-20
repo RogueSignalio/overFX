@@ -216,6 +216,7 @@ function getInt(num) {
 
 window.loaded_js = {}
 function load_js(name,onload=function(){}) {
+  console.log('In use???')
   if (window.loaded_js[name]) return;
   const script = document.createElement('script');
   script.id = `${name}`;
