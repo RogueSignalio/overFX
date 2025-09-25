@@ -4,11 +4,15 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 ===========================================================================*/
 class Boom extends OverFxScene {
 	fx_preload() {
-	  this.load.image('particle1', `${this.config.image_path}/muzzleflash3.png`);
-		this.load.audio('boom', [`${this.config.audio_path}/explosion.mp3`]);
+    this.load_assets([
+      ['audio', 'boom', `${this.config.audio_path}/explosion.mp3` ],
+      ['image', 'particle1', `${this.config.image_path}/muzzleflash3.png` ],
+    ])
 	}
 
 	fx_create() {
+    this.use_particle_cleanup()
+
 		var x = this.w/2 + getRndInteger(-this.w/4, this.w/4)
 		var y = this.h/2 + getRndInteger(-this.h/3, this.h/6)
 

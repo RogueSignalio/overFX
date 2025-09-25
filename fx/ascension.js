@@ -10,8 +10,10 @@ class Ascension extends OverFxScene {
   }
 
   fx_preload() {
-	  this.load.image('ascension', `${this.config.image_path}/white.png`);
-		this.load.audio('ascensiona', [`${this.config.audio_path}/choir-transition-sound.mp3`,]);
+    this.load_assets([
+  	  ['image','ascension', `${this.config.image_path}/white.png`],
+  		['audio','ascensiona', `${this.config.audio_path}/choir-transition-sound.mp3`],
+    ]);
     if (this.bg_on) this.engine.run_fx('background',{ bgcolor: 0x000000, hold: (this.hold + (this.fade * 5)), fade: this.fade/2})
   }
 

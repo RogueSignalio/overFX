@@ -4,11 +4,15 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 ===========================================================================*/
 class Fountain extends OverFxScene {
 	fx_preload() {
-	  this.load.atlas('fountain1', `${this.config.image_path}/fountain.png`, `${this.config.image_path}/fountain.json`);
-		this.load.audio('fountaina', [`${this.config.audio_path}/fountain.mp3`]);
-	}
+    this.load_assets([
+      ['audio','fountaina', `${this.config.audio_path}/fountain.mp3`],
+      ['atlas','fountain1', `${this.config.image_path}/fountain.png`, `${this.config.image_path}/fountain.json`]
+    ])
+  }
 
 	fx_create() {
+    this.use_particle_cleanup()
+
 	  var particles = 'fountain1' //this.add.particles('fountain1');
 		var offset = this.h > 690 ? (this.h - 690) : 0
 

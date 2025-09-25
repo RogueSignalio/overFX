@@ -43,12 +43,13 @@ class OverFx {
         audio_path: './fx/assets/audio',
         modules_path: './fx',
         minified_modules: false,
+        rs_soundengine: null,
         ...config
       }
-
+      this.rs_soundengine = this.config.rs_soundengine
       this.engine.canvas.style.zIndex = this.config.z_index * -1
       this.counter = 0; // Used to generate unique scene IDs.  Will reset when scene count == 0
-    	this.loaded = {}; // Store list of loaded JS scripts
+    	window.overfx_loaded = {}; // Store list of loaded JS scripts
       this.load_fx('overfx_timer'); // Base FX setOverTimeouts
       this.load_fx('overfx_scene'); // Base FX scene
       this.load_fx('canned_fx',() => { Object.assign(this,CannedFx); }); // Built-in "canned" FX
@@ -113,31 +114,24 @@ class OverFx {
     // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
     run_fx(name,config={}) {
       if (name.startsWith("canned_")) { this[name](1); }
-    	else if (!this.loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
+    	else if (!window.overfx_loaded[name]) { this.load_fx(name,()=>{ this._run_scene(name,config); }) }
       else { this._run_scene(name,config); }
     }
 
     // Load anything in the FX subdir, typically an actual FX plugin.
     // To load and immediately run, use run_fx() instead.
     load_fx(name,onload=null) {
-      if (this.config.preload) this.loaded[name] = true;
-      if (this.loaded[name]) return;
+      if (this.config.preload) window.overfx_loaded[name] = true;
+      if (window.overfx_loaded[name]) return;
       if (`${name}.js`)
-      this.config.debug && console.log(`${name} load call. Loading: ${this.loaded[name] == undefined}.`)
+      this.config.debug && console.log(`${name} load call. Loading: ${window.overfx_loaded[name] == undefined}.`)
       if (!onload) onload = ()=>{ };
       let script
-      // script = document.getElementById('sparks.js')
-      // if (script == null) {
 			script = document.createElement('script');
 	    script.id = `${name}.js`;
       let min = this.config.minified_modules ? '.min' : '' 
 	    script.src = `${this.config.modules_path}/${name}${min}.js`;
-      // }
-      // script.addEventListener("load", 
-      //   ()=> { this.loaded[name] = true; onload.call(this); },
-      //   // true
-      // )
-	    script.onload = ()=> { this.loaded[name] = true; onload.call(this); }
+	    script.onload = ()=> { window.overfx_loaded[name] = true; onload.call(this); }
       document.body.append(script);
       this.config.debug && console.log(`${name} loaded.`)
     }
@@ -177,15 +171,13 @@ class OverFx {
     }
 
     // Runs a loaded FX scene.
-    _run_scene(name,config={}) {
+    _run_scene(name,master_config={}) {
       let count = this.next_counter()
-      // console.log(`${name}/${count}`)
-
       var config = {
         key: `${name}/${count}`,
         engine: this,
         ...this.config,
-        ...config
+        ...master_config
       }
     	var cname = name[0].toUpperCase() + name.substr(1)
       this.config.debug && console.log("Run " + config.key, config)
@@ -195,13 +187,12 @@ class OverFx {
         this.to_front()
         this._check_timer()
       }
-//      this.counter++;
     }
 
     _check_timer() {
       setOverTimeout(() => {
         let ret = this.active_check();
-        this.config.debug && console.log('Timer: '+ ret + ':' + this.engine.scene.scenes.length);
+        this.config.debug && console.log('Timer Active?: '+ ret + ' , Scenes: ' + this.engine.scene.scenes.length);
         if (ret == true) this._check_timer()
       },300);
     }
@@ -214,6 +205,7 @@ class OverFx {
       }
       this.counter = 1
     }
+
 }
 
 function getRndInteger(min, max) {

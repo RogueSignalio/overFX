@@ -9,9 +9,11 @@ class Heartsplode extends OverFxScene {
   }
 
 	fx_preload() {
-    this.load.image('heart', `${this.config.image_path}/heart.png`);
-		this.load.audio('squeaka', `${this.config.audio_path}/squeakytoy.mp3`);
-		this.load.audio('pop', `${this.config.audio_path}/pop.mp3`);
+    this.load_assets([
+      ['audio','pop', `${this.config.audio_path}/pop.mp3` ],
+      ['audio','squeaka', `${this.config.audio_path}/squeakytoy.mp3` ],
+      ['image','heart', `${this.config.image_path}/heart.png` ],
+    ])
 	}
 
 	fx_create() {

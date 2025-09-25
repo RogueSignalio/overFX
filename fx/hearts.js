@@ -4,11 +4,15 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 ===========================================================================*/
 class Hearts extends OverFxScene {
 	fx_preload() {
-    this.load.image('heart1', `${this.config.image_path}/heart.png`);
-		this.load.audio('squeak', [`${this.config.audio_path}/squeakytoy.mp3`]);
-	}
-
+    this.load_assets([
+      ['audio','squeak', `${this.config.audio_path}/squeakytoy.mp3` ],
+      ['image','heart1', `${this.config.image_path}/heart.png` ],
+    ])
+  }
+  
 	fx_create() {
+    this.use_particle_cleanup()
+
     var conf = {
       x: this.w/8 + getRndInteger(-this.w/10,this.w/10),
       y: this.h/3 + getRndInteger(-this.h/10,this.h/10),

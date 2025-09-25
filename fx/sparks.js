@@ -1,10 +1,14 @@
 class Sparks extends OverFxScene {
 	fx_preload() {
-	  this.load.image('sparks', `${this.config.image_path}/white.png`);
-		this.load.audio('spark', [`${this.config.audio_path}/street-firework.mp3`,]);
+		this.load_assets([
+			['audio','sparka', `${this.config.audio_path}/street-firework.mp3`],
+			['image','sparks', `${this.config.image_path}/white.png`]
+		])
 	}
 
 	fx_create() {
+		this.use_particle_cleanup()
+
 		let x = this.w/2 + getRndInteger(-this.w/4, this.w/4)
 		let y = this.h/2 + getRndInteger(-this.h/3, this.h/6)
 		let conf = {
@@ -25,7 +29,7 @@ class Sparks extends OverFxScene {
       scale: { start: 0.2, end: 0 },
       tint: 0xFFF8E8,
     }));
-		this.audio_play_detune('spark',-1000,1000)
+		this.audio_play_detune('sparka',-1000,1000)
 	}
 
 }

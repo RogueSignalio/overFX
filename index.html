@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="icon" href="assets/favicon.png">
-<title>OverFX by RogueSignal.io</title>
-<link rel="stylesheet" href="overfx.css" id="page_style">
-<script src="https://cdn.jsdelivr.net/npm/phaser@v3.88.2/dist/phaser.min.js" crossorigin="anonymous"></script>
-
-<script src="fx/overfx.js" crossorigin="anonymous"></script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="assets/favicon_large.png">
+  <title>OverFX by RogueSignal.io</title>
+  <link rel="stylesheet" href="overfx.css" id="page_style">
+  <script src="https://cdn.jsdelivr.net/npm/phaser@v3.90.0/dist/phaser.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overBase@latest/scripts/over_base.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overBase@latest/scripts/over_ph_base.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overAudio@v0.1.4/scripts/over_audio.min.js" crossorigin="anonymous"></script>
+  <script src="../overAudio/scripts/over_audio.js" crossorigin="anonymous"></script>
+  <script src="fx/overfx.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <button id="controlz" class="control_icon" onclick="toggle_controls();">🠻🠻</button>
@@ -71,12 +74,25 @@
   var bg_vis = true
   var logo_vis = true
   var ofx;
+  var oaudio;
 
   window.onload = function() {
     toggle_controls();
+    oaudio = new OverAudio({
+      width: 1 ,
+      height: 1,
+      background: '0xFFFF00',
+      transparent: false,
+      audio_path: '',
+      // debug: true,
+      after_init: function() {
+//        console.log('Loaded OverAudio!')
+      }
+    })    
     ofx = new OverFx({ 
       pre_canned: true, 
-      debug: true,
+      // debug: true,
+      rs_soundengine: oaudio,
       // modules_path: 'https://cdn.jsdelivr.net/gh/RogueSignalio/overFX@v1.0.3/fx',
       // minified_modules: true,      
     })
