@@ -20,6 +20,18 @@ const CannedFx = {
     this.run_fx_timed('confetti',cnt*2,{},25,50);
   },
 
+  canned_us_stars(cnt=1) {
+    this.run_fx_timed('stars',cnt*2,{},25,50);
+  },
+
+  canned_china_stars(cnt=1) {
+    this.run_fx_timed('stars',cnt*2,{ tints: [ 0xCCAE33, 0xBB1C25 ] } ,25,50);
+  },
+
+  canned_mixed_stars(cnt=1) {
+    this.run_fx_timed('stars',cnt*2,{ tints: [ 0xCC3333, 0xCCAE33, 0x3370CC ] },25,50);
+  },
+
   canned_heart(cnt=1) {
     this.run_fx_timed('hearts',cnt*2,{},25,50);
   },

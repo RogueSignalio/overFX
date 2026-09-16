@@ -10,8 +10,8 @@
   <script src="https://cdn.jsdelivr.net/npm/phaser@v3.90.0/dist/phaser.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overBase@latest/scripts/over_base.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overBase@latest/scripts/over_ph_base.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overAudio@v0.1.4/scripts/over_audio.min.js" crossorigin="anonymous"></script>
-  <script src="../overAudio/scripts/over_audio.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/RogueSignalio/overAudio@v0.1.6/scripts/over_audio.min.js" crossorigin="anonymous"></script>
+  <!-- <script src="../overAudio/scripts/over_audio.js" crossorigin="anonymous"></script> -->
   <script src="fx/overfx.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -26,7 +26,13 @@
 	<button onClick="ofx.canned_sparks()">Sparks</button><br>
 	<button onClick="ofx.canned_fountain()">Fountain</button><br>
 	<button onClick="ofx.canned_confetti()">Confetti</button><br>	
-	<button onClick="ofx.canned_heart()">Heart</button><br>	
+  <button onClick="ofx.canned_us_stars()">US Stars</button><br> 
+  <button onClick="ofx.canned_china_stars()">China Stars</button><br> 
+  <button onClick="ofx.canned_mixed_stars()">Mix Stars</button><br> 
+<!--   <button onClick="ofx.run_fx_timed('stars',2,{ tints: [ 0xCCAE33, 0xBB1C25 ] },25,50)">Stars 2</button><br> 
+  <button onClick="ofx.run_fx_timed('stars',2,{ tints: [ 0xCC3333, 0xCCCCCC, 0x3370CC,0xCCAE33, 0xBB1C25 ] },25,50)">Stars 3</button><br> 
+ -->	
+  <button onClick="ofx.canned_heart()">Heart</button><br>	
 	<button onClick="ofx.canned_spray()">Spray</button><br>
 	<button onClick="ofx.canned_boom()">Boom!</button><br>	
 	<button onClick="ofx.canned_chill()">Chill</button><br>
@@ -78,17 +84,17 @@
 
   window.onload = function() {
     toggle_controls();
-    oaudio = new OverAudio({
-      width: 1 ,
-      height: 1,
-      background: '0xFFFF00',
-      transparent: false,
-      audio_path: '',
-      // debug: true,
-      after_init: function() {
-//        console.log('Loaded OverAudio!')
-      }
-    })    
+//     oaudio = new OverAudio({
+//       width: 1 ,
+//       height: 1,
+//       background: '0xFFFF00',
+//       transparent: false,
+//       audio_path: '',
+//       // debug: true,
+//       after_init: function() {
+// //        console.log('Loaded OverAudio!')
+//       }
+//     })    
     ofx = new OverFx({ 
       pre_canned: true, 
       // debug: true,
