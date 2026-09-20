@@ -6,7 +6,10 @@ class Stars extends OverFxScene {
   fx_preload() {
 
     this.load_assets([
-      ['audio','confettia', `${this.config.audio_path}/pop.mp3`],
+      // ['audio','confettia', `${this.config.audio_path}/pop.mp3`],
+      
+      // ['audio', 'stars_snd', `${this.config.audio_path}/firework4.mp3`],
+      ['audio', 'stars_snd', `${this.config.audio_path}/street-firework.mp3`],
       ['image','stars1', `${this.config.image_path}/fx_star.png`]
     ])
   }
@@ -33,7 +36,7 @@ class Stars extends OverFxScene {
     }
 
     for (var i=0;i<10;i++) { this.add_emitter('stars1',conf) }
-    this.audio_play_detune('confettia',-300,300)
+    this.audio_play_detune('stars_snd',-300,300)
   }
 
 }
