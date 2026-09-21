@@ -29,6 +29,7 @@ class OverFx {
 				transparent: true, 
 		    backgroundColor: 'rgba(0,0,0,0)',
 			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;visibility:hidden;",
+
         ...ph_config
     	});
 
@@ -44,6 +45,7 @@ class OverFx {
         modules_path: './fx',
         minified_modules: false,
         rs_soundengine: null,
+        on_load: ()=> {},
         ...config
       }
       this.rs_soundengine = this.config.rs_soundengine
@@ -51,7 +53,7 @@ class OverFx {
       this.counter = 0; // Used to generate unique scene IDs.  Will reset when scene count == 0
     	window.overfx_loaded = {}; // Store list of loaded JS scripts
       this.load_fx('overfx_timer'); // Base FX setOverTimeouts
-      this.load_fx('overfx_scene'); // Base FX scene
+      this.load_fx('overfx_scene',this.config.on_load); // Base FX scene
       this.load_fx('canned_fx',() => { Object.assign(this,CannedFx); }); // Built-in "canned" FX
 
       // Resize is an issue ... this seems to be the most reliable path.
@@ -111,6 +113,12 @@ class OverFx {
 			}      
     }
 
+    preload_fx(name,config={}) {
+      this.load_fx(name,()=>{
+        this._preload_scene(name,config)
+      })
+    }
+
     // Loads, if needed, the FX plugin and run_scene(fx) when done or if loaded.
     run_fx(name,config={}) {
       if (name.startsWith("canned_")) { this[name](1); }
@@ -131,8 +139,8 @@ class OverFx {
 	    script.id = `${name}.js`;
       let min = this.config.minified_modules ? '.min' : '' 
 	    script.src = `${this.config.modules_path}/${name}${min}.js`;
-	    script.onload = ()=> { window.overfx_loaded[name] = true; onload.call(this); }
       document.body.append(script);
+      script.onload = ()=> { window.overfx_loaded[name] = true; onload.call(this); }
       this.config.debug && console.log(`${name} loaded.`)
     }
 
@@ -168,6 +176,30 @@ class OverFx {
     next_counter() {
       this.counter = this.counter + 1
       return this.counter
+    }
+
+    // Preloads scene
+    _preload_scene(name,master_config={}) {
+      var config = {
+        key: `${name}/preload`,
+        engine: this,
+        ...this.config,
+        ...master_config
+      }
+      var cname = name[0].toUpperCase() + name.substr(1)
+      this.config.debug && console.log("Pre-Run " + config.key, config)
+      var fxscene = eval(`new ${cname}(config)`)
+      window.fxscene = fxscene
+      var generic_scene = new OverFxScene(config);
+      generic_scene.fx_preload = fxscene.fx_preload
+      generic_scene.fx_create = function() {
+        setOverTimeout(()=> {
+          this.kill_scene()
+        },0);
+      }
+      this.engine.scene.add(config.key, generic_scene, true, {} );
+      //console.log(fxscene)
+      //fxscene.forced_preload()
     }
 
     // Runs a loaded FX scene.

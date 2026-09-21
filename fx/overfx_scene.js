@@ -39,6 +39,11 @@ class OverFxScene extends Phaser.Scene {
     this.active = true; // Setting active == false and enable_cleanup == true, will break down the scene.
   }
 
+  forced_preload() {
+    this.preload()
+    this.load()
+  }
+
   preload() {
     this.w = this.game.canvas.width; //window.innerWidth
     this.h = this.game.canvas.height; //window.innerHeight
@@ -163,11 +168,11 @@ class OverFxScene extends Phaser.Scene {
     if (params[0] == 'atlas') { this.load.atlas(params[1],params[2],params[3]) }
     if (params[0] == 'audio') {
       if (this.rs_soundengine != null) {
-        console.log('re-routing audio to external sound engine')
+        this.config.debug && console.log('re-routing audio to external sound engine')
         this.rs_sounds.push(params[1])
         this.rs_soundengine.sound_load(params[1],params[2],'scramgine',{ retrigger: 'clone', ...params[3]},force)
       } else {
-        console.log('load audio '+params[1])
+        this.config.debug && console.log('load audio '+params[1])
         this.load.audio(params[1],params[2],params[3])
       }
     }

@@ -23,7 +23,6 @@
   <button onClick="" class="toggle"><label for="vol"><input type="checkbox" id="vol" checked="true" onclick="ofx.audio_toggle();">🕪</label></button>
   <button onClick="ofx.stop()" class="toggle" style="color:red;">🛑</button>
 <br>
-  <button onClick="ofx.run_fx('starsclick')">Click ME</button><br>
 	<button onClick="ofx.canned_sparks()">Sparks</button><br>
 	<button onClick="ofx.canned_fountain()">Fountain</button><br>
 	<button onClick="ofx.canned_confetti()">Confetti</button><br>	
@@ -56,6 +55,7 @@
 	<button onClick="ofx.run_fx('vortex', { shake: 0.007}); ofx.run_fx('webfonttext',{ blend: 2, hold: 6000, text: '👁', font: 'Roboto', font_size: 300, color: '#FFDD44', border_color: '#883300'})">Shaker</button><br>
 	<button onClick="ofx.canned_wonderful()">Wonderful2</button><br>
 	<button onClick="ofx.run_fx('invaders')">Invaders</button><br>
+  <button onClick="ofx.run_fx_timed('roguesignal',3)">Click ME</button><br>
 
 </div>
 <div id="logo" class="logo">
@@ -98,11 +98,21 @@
 //     })    
     ofx = new OverFx({ 
       pre_canned: true, 
-      // debug: true,
+      //debug: true,
       rs_soundengine: oaudio,
       // modules_path: 'https://cdn.jsdelivr.net/gh/RogueSignalio/overFX@v1.0.3/fx',
-      // minified_modules: true,      
+      // minified_modules: true,   
+    },{
+      // callbacks: {
+      //   preBoot: (overfx) => {
+      //   },
+      // },
     })
+
+    setTimeout(function() {
+        ofx.preload_fx('stars',function() { })
+    },2000)
+
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { 
       this.blur(); 
