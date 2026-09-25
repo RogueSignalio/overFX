@@ -11,31 +11,28 @@ class Starsclick extends OverFxScene {
   }
 
   fx_create() {
+    this.use_particle_cleanup()
+    let x = 0; let y = 0;
     let tints = [ 0x33AADD, 0xAABBFF ] //0xCC3333, 0xCCCCCC, 0x3370CC ]
     if (this.config.tints) {
       tints = this.config.tints
     }
 
-    // let conf = {
-    //   x: x,
-    //   y: y,
-    //   speed: { min: -170, max: 170 },
-    //   scale: { start: 0.01, end: 3.5 },
-    //   alpha: { start:15, end: 0 },
-    //   rotate: { min: -720, max: 720 },
-    //   blendMode: 'ADD',
-    //   lifespan: 6000,
-    //   gravityY: getRndInteger(-60, 60),
-    //   gravityX: getRndInteger(-60, 60), //{ min: -250, max: 250},
-    //   maxParticles: 100,
-    //   quantity: 1,
-    //   tint: [ 0xCC3333, 0xCC6633, 0xCC9933, 0x9933CC ],
-    // }
+    // Only works inside existing phaser canvas
+    //    var worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
+    // let x = getInt(worldPoint.x)
+    // let y = getInt(worldPoint.y)
 
-    this.use_particle_cleanup()
-    var worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
-    let x = getInt(worldPoint.x)
-    let y = getInt(worldPoint.y)
+    if (this.config.x) {
+      const rect = this.game.canvas.getBoundingClientRect();
+      x = window.mouse_x - rect.left;
+      y = window.mouse_y - rect.top;
+    }
+    else {
+      const rect = this.game.canvas.getBoundingClientRect();
+      x = window.mouse_x - rect.left;
+      y = window.mouse_y - rect.top;
+    }
 
     // let x = this.w/2 + getRndInteger(-this.w/4, this.w/4)
     // let y = this.h/2 + getRndInteger(-this.h/3, this.h/6)

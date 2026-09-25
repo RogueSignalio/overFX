@@ -60,7 +60,7 @@
 </div>
 <div id="logo" class="logo">
   <p class="rsyellow">OverFx by <a href="http://www.roguesignal.io" target="_BLANK_">RogueSignal.IO</a><p>
-  <img src="assets/RogueSignal_FullLogo.svg" style="width:350px;"/>
+  <img id="logo_image" src="assets/RogueSignal_FullLogo.svg" style="width:350px;"/>
   <p>Click Me!</p>
   <ul id="details" class="details">
     <li> OverFx prevents click thru during effect (ie., OVER)
@@ -111,12 +111,18 @@
 
     setTimeout(function() {
         ofx.preload_fx('stars',function() { })
-    },2000)
+    },500)
 
     logo = document.getElementById('logo');
     logo.addEventListener("click", function(event) { 
       this.blur(); 
-      ofx.run_fx('starsclick') 
+      logo_image = document.getElementById('logo_image');
+      let count = getRndInteger(1, 10)
+      if (count < 6) { count = 1 }
+      else if (count == 10) { count = 3 }
+      else if (count >= 6) { count = 2 }
+      ofx.run_fx_timed('sparksclick',count,{ inside_element: logo_image },50,100) 
+      // ofx.run_fx('starsclick') 
       // ofx.run_fx_timed('roguesignal',3); 
       event.stopPropagation();
     }, false);

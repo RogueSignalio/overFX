@@ -28,8 +28,7 @@ class OverFx {
 		    height: window.innerHeight,
 				transparent: true, 
 		    backgroundColor: 'rgba(0,0,0,0)',
-			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;visibility:hidden;",
-
+			  canvasStyle: "position:absolute;top:0px;left:0px;z-index:-10000;visibility:hidden;pointer-events: none;",
         ...ph_config
     	});
 
@@ -248,6 +247,34 @@ function getInt(num) {
   return Math.floor(num)
 }
 
+function setMousePos(e) {
+  window.mouse_x = e.clientX
+  window.mouse_y = e.clientY
+}
+
+function getRandomPositionInElement(element) {
+    // 1. Get the element's position relative to the viewport
+    const rect = element.getBoundingClientRect();
+    
+    // 2. Define the element's boundaries
+    const minX = rect.left;
+    const minY = rect.top;
+    const maxX = rect.right;
+    const maxY = rect.bottom;
+    
+    // 3. Calculate the available width and height for the random point
+    // We subtract a small buffer or the element's own dimensions if placing 
+    // a child object, but for a point inside the rect itself:
+    const availableWidth = maxX - minX;
+    const availableHeight = maxY - minY;
+    
+    // 4. Generate random coordinates within these bounds
+    const randomX = minX + (Math.random() * availableWidth);
+    const randomY = minY + (Math.random() * availableHeight);
+    
+    return { x: randomX, y: randomY };
+}
+
 window.loaded_js = {}
 function load_js(name,onload=function(){}) {
   console.log('In use???')
@@ -263,3 +290,5 @@ function load_js(name,onload=function(){}) {
 
   this.config.debug && console.log(`${name} loaded.`)
 }
+
+document.addEventListener('click', setMousePos, true);
