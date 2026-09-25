@@ -23,10 +23,19 @@ class Starsclick extends OverFxScene {
     // let x = getInt(worldPoint.x)
     // let y = getInt(worldPoint.y)
 
+    if (this.config.inside_element) {
+      // const element = document.getElementById(this.config.inside_element)
+      // const rect = element.getBoundingClientRect();
+      const point = getRandomPositionInElement(this.config.inside_element) 
+      this.config.x = window.screenX + point.x,
+      this.config.y = window.screenY + point.y
+    }
+
     if (this.config.x) {
       const rect = this.game.canvas.getBoundingClientRect();
-      x = window.mouse_x - rect.left;
-      y = window.mouse_y - rect.top;
+      // Assuming 'pointer' is your input event
+      x = this.config.x - rect.left;
+      y = this.config.y - rect.top;
     }
     else {
       const rect = this.game.canvas.getBoundingClientRect();

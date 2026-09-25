@@ -5,10 +5,10 @@ Copyright: RogueSignal.io, wwww.roguesignal.io, 2023
 class Sparksclick extends OverFxScene {
   fx_preload() {
     this.load_assets([
-      ['audio', 'stars_snd_cl', `${this.config.audio_path}/spark.mp3`],
-      ['image','stars_cl', `${this.config.image_path}/white.png`],
-      ['image','stars_cl2', `${this.config.image_path}/white.png`],
-      ['image','stars_cl3', `${this.config.image_path}/white.png`],
+      ['audio', 'sparks_snd_cl', `${this.config.audio_path}/spark.mp3`],
+      ['image','sparks_cl', `${this.config.image_path}/white.png`],
+      ['image','sparks_cl2', `${this.config.image_path}/white.png`],
+      ['image','sparks_cl3', `${this.config.image_path}/white.png`],
     ])
   }
 
@@ -26,7 +26,6 @@ class Sparksclick extends OverFxScene {
     // let y = getInt(worldPoint.y)
 
     if (this.config.inside_element) {
-      console.log('!!!')
       // const element = document.getElementById(this.config.inside_element)
       // const rect = element.getBoundingClientRect();
       const point = getRandomPositionInElement(this.config.inside_element) 
@@ -35,9 +34,6 @@ class Sparksclick extends OverFxScene {
     }
 
     if (this.config.x) {
-      console.log(this.config.x)
-      console.log(this.config.y)
-
       const rect = this.game.canvas.getBoundingClientRect();
       // Assuming 'pointer' is your input event
       x = this.config.x - rect.left;
@@ -90,15 +86,13 @@ class Sparksclick extends OverFxScene {
       // } 
     }
 
-    console.log(Phaser.Math.RadToDeg(angle))
     let dir_angle = Phaser.Math.RadToDeg(angle)
     let offset_multi = 1
     if (dir_angle > 0) {
       dir_angle = dir_angle * -1
     } 
-    console.log(dir_angle)
     // this.add_emitter('sparks',Object.assign(conf));
-    this.add_emitter('stars_cl2',{
+    this.add_emitter('sparks_cl2',{
        ...conf,
        speed: { min: 200, max: 200 },
        scale: { start: 0.15, end: 0 },
@@ -110,7 +104,7 @@ class Sparksclick extends OverFxScene {
        maxParticles: 20,
        blendMode: 'ADD',
     });
-    for (var i=0;i<3;i++) { this.add_emitter('stars_cl',{
+    for (var i=0;i<3;i++) { this.add_emitter('sparks_cl',{
       ...conf,
       x: { random: [x-5,x+5] },
       y: { random: [y-5,y+5] },
@@ -118,7 +112,7 @@ class Sparksclick extends OverFxScene {
       gravityY: 1800 + (200 * i), //{ start: 1100, end: 1200 }, 
 
     }) }
-    // for (var i=0;i<4;i++) { this.add_emitter('stars_cl3',{
+    // for (var i=0;i<4;i++) { this.add_emitter('sparks_cl3',{
     //   ...conf,
     //   speed: { min: 400, max: 500 },
     //   // angle: {min: dir_angle + 55, max: dir_angle -55 },
@@ -133,7 +127,7 @@ class Sparksclick extends OverFxScene {
     //   quantity: 2,
     //   maxParticles: 10,
     // }) }
-    this.audio_play_detune('stars_snd_cl',-300,300)
+    this.audio_play_detune('sparks_snd_cl',-300,300)
   }
 
 }

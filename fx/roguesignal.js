@@ -11,9 +11,20 @@ class Roguesignal extends OverFxScene {
 	}
 
 	fx_create() {
-    var worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
-    let x = getInt(worldPoint.x)
-    let y = getInt(worldPoint.y)
+    let x = 0;
+    let y = 0;
+
+    if (this.config.x) {
+      const rect = this.game.canvas.getBoundingClientRect();
+      // Assuming 'pointer' is your input event
+      x = this.config.x - rect.left;
+      y = this.config.y - rect.top;
+    }
+    else {
+      const rect = this.game.canvas.getBoundingClientRect();
+      x = window.mouse_x - rect.left;
+      y = window.mouse_y - rect.top;
+    }
 
 		let conf = {
       x: x,
